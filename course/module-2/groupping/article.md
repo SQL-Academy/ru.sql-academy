@@ -126,4 +126,4 @@ GROUP BY home_type
 
     ![Группировка по 2 полям](https://sql-academy.org/static/guidePage/groupping/groupping_by_2_field.png 'Группировка по 2 полям')
 
-Давайте проверим себя ? При использовании оператора `GROUP BY` в `SELECT` выражение мы можем выводить:
+Давайте проверим себя? При использовании оператора `GROUP BY` в `SELECT` выражение мы можем выводить:
