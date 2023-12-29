@@ -20,15 +20,15 @@ SELECT 2 * ((22 - 16) / (2 + 1)) AS calc_example;
 
 | Имя функции                                                                          | Описание                                         |
 | :----------------------------------------------------------------------------------- | ------------------------------------------------ |
-| <a href="https://sql-academy.org/handbook/POW" target="_blank">`POW(num, power)`</a> | Вычисляет число в указанной степени              |
-| <a href="https://sql-academy.org/handbook/SQRT" target="_blank">`SQRT(num)`</a>      | Вычисляет квадратный корень числа                |
-| <a href="https://sql-academy.org/handbook/LOG" target="_blank">`LOG(base, num)`</a>  | Вычисляет логарифм числа по указанному основанию |
-| <a href="https://sql-academy.org/handbook/EXP" target="_blank">`EXP(num)`</a>        | Вычисляет e<sup>num</sup>                        |
-| <a href="https://sql-academy.org/handbook/SIN" target="_blank">`SIN(num)`</a>        | Вычисляет синус числа                            |
-| <a href="https://sql-academy.org/handbook/COS" target="_blank">`COS(num)`</a>        | Вычисляет косинус числа                          |
-| <a href="https://sql-academy.org/handbook/TAN" target="_blank">`TAN(num)`</a>        | Вычисляет тангенс числа                          |
+| <a href="https://sql-academy.org/handbook/pow" target="_blank">`POW(num, power)`</a> | Вычисляет число в указанной степени              |
+| <a href="https://sql-academy.org/handbook/sqrt" target="_blank">`SQRT(num)`</a>      | Вычисляет квадратный корень числа                |
+| <a href="https://sql-academy.org/handbook/log" target="_blank">`LOG(base, num)`</a>  | Вычисляет логарифм числа по указанному основанию |
+| <a href="https://sql-academy.org/handbook/exp" target="_blank">`EXP(num)`</a>        | Вычисляет e<sup>num</sup>                        |
+| <a href="https://sql-academy.org/handbook/sin" target="_blank">`SIN(num)`</a>        | Вычисляет синус числа                            |
+| <a href="https://sql-academy.org/handbook/cos" target="_blank">`COS(num)`</a>        | Вычисляет косинус числа                          |
+| <a href="https://sql-academy.org/handbook/tan" target="_blank">`TAN(num)`</a>        | Вычисляет тангенс числа                          |
 
-Список всех числовых функций, их описание и примеры можно посмотреть в <a href="https://sql-academy.org/handbook/CEILING" target="_blank">справочнике</a>.
+Список всех числовых функций, их описание и примеры можно посмотреть в <a href="https://sql-academy.org/handbook/ceiling" target="_blank">справочнике</a>.
 
 ## Округление чисел
 
