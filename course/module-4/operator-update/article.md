@@ -19,9 +19,6 @@ SET поле_таблицы1 = значение_поля_таблицы1,
 UPDATE FamilyMembers
 SET member_name = "Andie Anthony"
 WHERE member_name = "Andie Quincey";
-
--- и сразу же проверим результат
-SELECT * FROM FamilyMembers;
 ```
 
 | member_id | status      | member_name       | birthday             |
@@ -39,11 +36,11 @@ SELECT * FROM FamilyMembers;
 
 ## Вычисляемые значения
 
-В запросах на обновление данных можно менять значения, опираясь на предыдущие значение.
+В запросах на обновление данных можно менять значения, опираясь на предыдущее значение.
 
 ```sql
 UPDATE Payments
-SET unit_price = unit_price * 2
+SET unit_price = unit_price * 2;
 ```
 
 Разрешается также значения одних столбцов присваивать другим столбцам. Но при этом, естественно, типы столбцов должны быть совместимыми.

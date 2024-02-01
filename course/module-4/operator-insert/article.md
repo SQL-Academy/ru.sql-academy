@@ -16,18 +16,21 @@ VALUES (значение_поля_таблицы, ...)
 
 <ERD databaseName="Family" />
 
-```sql
-INSERT INTO Goods (good_id, good_name, type)
-VALUES (20, 'Table', 2);
-```
+-   Используя синтаксис `INSERT INTO ... SELECT`
 
-```sql
-INSERT INTO Goods (good_id, good_name, type)
-VALUES (20, 'Table', 2);
+    ```sql-executable-Family-targetTable:Goods
+    INSERT INTO Goods (good_id, good_name, type)
+    SELECT 20, 'Table', 2;
+    ```
 
--- и сразу же проверим результат
-SELECT * FROM Goods;
-```
+-   Используя синтаксис `INSERT INTO ... VALUES (...)`
+
+    ```sql-executable-Family-targetTable:Goods
+    INSERT INTO Goods (good_id, good_name, type)
+    VALUES (20, 'Table', 2);
+    ```
+
+Каждый из этих запросов даст одинаковый результат:
 
 | good_id | good_name          | type |
 | ------- | ------------------ | ---- |
@@ -63,13 +66,13 @@ INSERT INTO Goods SELECT COUNT(*) + 1, 'Table', 2 FROM Goods;
 ## MySQL
 
 В MySQL введён механизм его автоматической генерации. Для этого достаточно снабдить первичный ключ `good_id` атрибутом `AUTO_INCREMENT`.
-Тогда при создании новой записи в качестве значения `good_id` достаточно передать `NULL` или `0`— поле автоматически получит значение, равное максимальному значению столбца`good_id`, плюс единица.
+Тогда при создании новой записи в качестве значения `good_id` достаточно передать `NULL` или `0` — поле автоматически получит значение, большее предыдущего на единицу.
 
 ```sql
 CREATE TABLE Goods (
 	good_id INT NOT NULL AUTO_INCREMENT
 	...
- );
+);
 ```
 
 ```sql
@@ -80,13 +83,13 @@ INSERT INTO Goods VALUES (NULL, 'Table', 2);
 
 В PostgreSQL есть схожий механизм для автоматической генерации уникального идентификатора.
 Для этого он имеет типы `SMALLSERIAL`, `SERIAL`, `BIGSERIAL`, которые не являются настоящими типами, а скорее просто удобством записи столбцов с уникальным идентификатором.
-Столбец с одним из вышеперечисленных типов будет являться целочисленным и автоматически увеличиваться при добавление новой записи.
+Столбец с одним из вышеперечисленных типов будет являться целочисленным и автоматически увеличиваться при добавлении новой записи.
 
 ```sql
 CREATE TABLE Goods (
 	good_id SERIAL
 	...
- );
+);
 ```
 
 ```sql
