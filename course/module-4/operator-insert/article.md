@@ -14,8 +14,6 @@ VALUES (значение_поля_таблицы, ...)
 
 Таким образом, добавить новые записи можно следующими способами:
 
-<ERD databaseName="Family" />
-
 -   Используя синтаксис `INSERT INTO ... SELECT`
 
     ```sql-executable-Family-targetTable:Goods
