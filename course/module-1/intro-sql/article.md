@@ -1,3 +1,9 @@
+---
+meta:
+    title: 'Вводная информация о SQL'
+    description: 'Определение языка SQL. Диалекты (расширения) языка SQL. Отличия T-SQL, PL/SQL, PL/pgSQL.'
+---
+
 # Вводная информация о SQL
 
 > SQL — язык структурированных запросов (SQL, Structured Query Language),
