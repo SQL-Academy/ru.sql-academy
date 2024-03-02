@@ -22,8 +22,8 @@ ORDER BY столбец_1 [ASC | DESC][, столбец_n [ASC | DESC]]
 
 Где `ASC` и `DESC` - направление сортировки:
 
-- `ASC` - сортировка по возрастанию (по умолчанию)
-- `DESC` - сортировка по убыванию
+-   `ASC` - сортировка по возрастанию (по умолчанию)
+-   `DESC` - сортировка по убыванию
 
 ## Сортировка по нескольким столбцам
 
@@ -47,40 +47,39 @@ ORDER BY столбец_1 [ASC | DESC][, столбец_n [ASC | DESC]]
 
 ## Примеры использования
 
-- Выведем названия авиакомпаний в алфавитном порядке из таблицы `Company`:
+-   Выведем названия авиакомпаний в алфавитном порядке из таблицы `Company`:
 
-  > Сортировка строковых данных по возрастанию подразумевает сортировку в лексикографическом (алфавитном) порядке.
+    > Сортировка строковых данных по возрастанию подразумевает сортировку в лексикографическом (алфавитном) порядке.
 
-  ```sql
-  SELECT name FROM Company ORDER BY name;
-  ```
+    ```sql
+    SELECT name FROM Company ORDER BY name;
+    ```
 
-  | name       |
-  | ---------- |
-  | Aeroflot   |
-  | air_France |
-  | British_AW |
-  | Dale_avia  |
-  | Don_avia   |
+    | name       |
+    | ---------- |
+    | Aeroflot   |
+    | air_France |
+    | British_AW |
+    | Dale_avia  |
+    | Don_avia   |
 
-- Выведем информацию о полётах, отсортированную по городу вылета самолёта в порядке возрастания и по городу прибытия в аэропорт в порядке убывания, из таблицы `Trip`:
+-   Выведем информацию о полётах, отсортированную по городу вылета самолёта в порядке возрастания и по городу прибытия в аэропорт в порядке убывания, из таблицы `Trip`:
 
-  ```sql
-  SELECT DISTINCT town_from, town_to FROM Trip
-  ORDER BY town_from, town_to DESC;
-  ```
+    ```sql
+    SELECT DISTINCT town_from, town_to FROM Trip
+    ORDER BY town_from, town_to DESC;
+    ```
 
-  | town_from   | town_to     |
-  | ----------- | ----------- |
-  | London      | Singapore   |
-  | London      | Paris       |
-  | Moscow      | Rostov      |
-  | Paris       | Rostov      |
-  | Rostov      | Vladivostok |
-  | Rostov      | Paris       |
-  | Rostov      | Moscow      |
-  | Singapore   | London      |
-  | Vladivostok | Rostov      |
+    | town_from   | town_to     |
+    | ----------- | ----------- |
+    | London      | Singapore   |
+    | London      | Paris       |
+    | Moscow      | Rostov      |
+    | Paris       | Rostov      |
+    | Rostov      | Vladivostok |
+    | Rostov      | Paris       |
+    | Rostov      | Moscow      |
+    | Singapore   | London      |
+    | Vladivostok | Rostov      |
 
-  В данном примере в начале записи сортируются по полю `town_from`. Затем там, если есть несколько записей с одинаковым значением в поле `town_from`,
-  то отрабатывает обратная сортировка по полю `town_to`.
+    В данном примере в начале записи сортируются по полю `town_from`. Затем, отрабатывает обратная сортировка по полю `town_to` для групп строк у которых в столбце `town_from` одинаковое значение.

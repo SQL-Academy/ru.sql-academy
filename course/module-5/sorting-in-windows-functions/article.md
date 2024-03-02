@@ -25,12 +25,12 @@ meta:
 
 Изначально мы имеем следующую выборку о бронированиях:
 
-![Использование оконной функции без сортировки](https://sql-academy.org/static/guidePage/sorting-in-windows-functions/initial-data.png "Использование оконной функции без сортировки")
+![Использование оконной функции без сортировки](https://sql-academy.org/static/guidePage/sorting-in-windows-functions/initial-data.png 'Использование оконной функции без сортировки')
 
 А как результат мы хотим увидеть изменение затраченных средств по каждому пользователю со временем, то есть
 таблицу следующего вида:
 
-![Использование оконной функции с сортировкой](https://sql-academy.org/static/guidePage/sorting-in-windows-functions/final-result.png "Использование оконной функции с сортировкой")
+![Использование оконной функции с сортировкой](https://sql-academy.org/static/guidePage/sorting-in-windows-functions/final-result.png 'Использование оконной функции с сортировкой')
 
 #### Разделение данных на партиции
 
@@ -48,7 +48,7 @@ SELECT user_id,
 FROM Reservations;
 ```
 
-![Промежуточный результат](https://sql-academy.org/static/guidePage/sorting-in-windows-functions/result-1.png "Промежуточный результат")
+![Промежуточный результат](https://sql-academy.org/static/guidePage/sorting-in-windows-functions/result-1.png 'Промежуточный результат')
 
 В результате выполненного запроса в колонке `total_expenses` вывелась общая сумма затраченных средств с
 разбивкой по пользователям. Но это не совсем то, что мы хотим: данные в таблице не упорядочены по дате и
@@ -67,7 +67,7 @@ SELECT user_id,
 FROM Reservations;
 ```
 
-![Финальные данные](https://sql-academy.org/static/guidePage/sorting-in-windows-functions/final-result.png "Финальные данные")
+![Финальные данные](https://sql-academy.org/static/guidePage/sorting-in-windows-functions/final-result.png 'Финальные данные')
 
 Теперь мы получили то, что и хотели. Но что изменилось после добавления `ORDER BY start_date`?
 
@@ -98,12 +98,12 @@ OVER (
 а только `N` записей до текущей строки и `N` после.
 
 При использовании `ORDER BY`, если в блоке `ROWS|RANGE` ничего не указано, то в оконной функции
-автоматически применяется правило `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`.
+автоматически применяется правило `RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`.
 Это означает, что окно будет начинаться с первой строки и
 заканчиваться текущей строкой.
 
 То есть значения для колонки `cumulative_total` будут высчитываться следующим образом:
 
-![Объяснение как сработала сортировка](https://sql-academy.org/static/guidePage/sorting-in-windows-functions/explanation.png "Объяснение как сработала сортировка")
+![Объяснение как сработала сортировка](https://sql-academy.org/static/guidePage/sorting-in-windows-functions/explanation.png 'Объяснение как сработала сортировка')
 
 Подробнее об окнах и их определении в следующей статье.
