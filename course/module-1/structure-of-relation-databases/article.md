@@ -42,7 +42,7 @@ DESCRIBE FamilyMembers
 | member_name | varchar(50) | NO   |     |
 | birthday    | datetime    | NO   |     |
 
-Или же посмотреть на ERD-диаграмму схемы базы данных:
+Или же посмотреть на ER-диаграмму схемы базы данных:
 
 ## Первичный ключ
 
