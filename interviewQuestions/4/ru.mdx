@@ -1,0 +1,116 @@
+---
+meta:
+    title: 'Объясните понятие нормализации и ее преимущества'
+    description: 'Нормализация в SQL уменьшает избыточность данных и улучшает целостность базы. Узнайте о нормальных формах и преимуществах этого процесса.'
+---
+
+> Нормализация — это процесс организации структуры базы данных с целью уменьшения избыточности данных и обеспечения их целостности.
+
+## Основные цели нормализации:
+
+-   Устранение избыточности: предотвращает дублирование данных.
+-   Повышение целостности данных: минимизирует вероятность неконсистентности данных.
+-   Облегчение поддержки и обновления: делает структуру базы данных более гибкой и понятной.
+
+## Основные нормальные формы
+
+-   Первая нормальная форма (1НФ): все столбцы содержат атомарные (неделимые) значения.
+-   Вторая нормальная форма (2НФ): удовлетворяет 1НФ и все неключевые столбцы зависят от всего первичного ключа.
+-   Третья нормальная форма (3НФ): удовлетворяет 2НФ и нет транзитивных зависимостей между неключевыми столбцами.
+
+## Пример
+
+**До нормализации:**
+
+export const beforeNormalizationTableFields = [
+    'StudentID',
+    'StudentName',
+    'CourseID',
+    'CourseName',
+];
+export const beforeNormalizationTableRows = [
+    {
+        StudentID: '1',
+        StudentName: 'John',
+        CourseID: '101',
+        CourseName: 'Math',
+    },
+    {
+        StudentID: '1',
+        StudentName: 'John',
+        CourseID: '102',
+        CourseName: 'Music',
+    },
+];
+
+<QueryTable
+    tableData={{
+        fields: beforeNormalizationTableFields,
+        rows: beforeNormalizationTableRows,
+    }}
+    maxLines={2}
+/>
+
+**После нормализации:**
+
+Таблица Students
+
+export const studentsTableFields = ['StudentID', 'StudentName'];
+export const studentsTableRows = [
+    {
+        StudentID: '1',
+        StudentName: 'John',
+    },
+];
+
+<QueryTable
+    tableData={{
+        fields: studentsTableFields,
+        rows: studentsTableRows,
+    }}
+    maxLines={1}
+/>
+
+Таблица Courses
+
+export const coursesTableFields = ['CourseID', 'CourseName'];
+export const coursesTableRows = [
+    {
+        CourseID: '101',
+        CourseName: 'Math',
+    },
+    {
+        CourseID: '102',
+        CourseName: 'Music',
+    },
+];
+
+<QueryTable
+    tableData={{
+        fields: coursesTableFields,
+        rows: coursesTableRows,
+    }}
+    maxLines={2}
+/>
+
+Таблица Enrollments
+
+export const enrollmentsTableFields = ['StudentID', 'CourseID'];
+export const enrollmentsTableRows = [
+    {
+        StudentID: '1',
+        CourseID: '101',
+    },
+    {
+        StudentID: '1',
+        CourseID: '102',
+    },
+];
+
+<QueryTable
+    tableData={{
+        fields: enrollmentsTableFields,
+        rows: enrollmentsTableRows,
+    }}
+    maxLines={2}
+/>

@@ -1,0 +1,61 @@
+---
+meta:
+    title: 'Объясните разницу между INNER JOIN и OUTER JOIN'
+    description: 'INNER JOIN возвращает только совпадающие записи из обеих таблиц, тогда как OUTER JOIN включает все записи, даже если нет соответствий. Узнайте ключевые различия.'
+---
+
+## INNER JOIN:
+
+-   Возвращает только те записи, у которых есть соответствующие записи в обеих объединяемых таблицах.
+-   Если соответствия нет, запись не включается в результат.
+
+Пример:
+
+```sql
+SELECT *
+FROM employees e
+INNER JOIN departments d ON e.department_id = d.id;
+```
+
+## OUTER JOIN:
+
+-   Возвращает записи, которые имеют соответствия, а также записи из одной таблицы, для которых соответствий нет.
+
+### Виды OUTER JOIN:
+
+**LEFT OUTER JOIN (LEFT JOIN):**
+
+-   Возвращает все записи из левой таблицы и соответствующие записи из правой таблицы.
+-   Если соответствия нет, столбцы правой таблицы будут `NULL`.
+
+Пример:
+
+```sql
+SELECT *
+FROM employees e
+LEFT JOIN departments d ON e.department_id = d.id;
+```
+
+**RIGHT OUTER JOIN (RIGHT JOIN):**
+
+-   Возвращает все записи из правой таблицы и соответствующие записи из левой таблицы.
+-   Если соответствия нет, столбцы левой таблицы будут `NULL`.
+
+Пример:
+
+```sql
+SELECT *
+FROM employees e
+RIGHT JOIN departments d ON e.department_id = d.id;
+```
+
+**FULL OUTER JOIN (FULL JOIN):**
+
+-   Возвращает все записи, когда есть соответствие в одной из таблиц.
+-   Если соответствия нет, соответствующие столбцы будут `NULL`.
+
+```sql
+SELECT *
+FROM employees e
+FULL OUTER JOIN departments d ON e.department_id = d.id;
+```

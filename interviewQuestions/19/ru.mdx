@@ -1,0 +1,79 @@
+---
+meta:
+    title: 'Что такое ограничения (constraints) и какие виды существуют?'
+    description: 'Ограничения в SQL обеспечивают целостность данных. Узнайте о NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY, CHECK и DEFAULT для надежности данных в таблицах.'
+---
+
+**Ограничения** обеспечивают целостность и надежность данных в таблице, определяя правила для данных в столбцах.
+
+Виды ограничений:
+
+**NOT NULL:**
+
+-   Запрещает хранение `NULL` значений в столбце.
+
+Пример:
+
+```sql
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+```
+
+**UNIQUE:**
+
+-   Обеспечивает уникальность значений в столбце или группе столбцов.
+
+Пример:
+
+```sql
+CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    email VARCHAR(100) UNIQUE
+);
+```
+
+**PRIMARY KEY:**
+
+-   Комбинация `NOT NULL` и `UNIQUE`.
+-   Идентифицирует каждую запись в таблице.
+
+**FOREIGN KEY:**
+
+-   Обеспечивает ссылочную целостность между таблицами.
+-   Значение должно соответствовать существующему значению первичного ключа в связанной таблице.
+
+Пример:
+
+```sql
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+```
+
+**CHECK:**
+
+-   Определяет условие, которому должны соответствовать значения в столбце.
+
+Пример:
+
+```sql
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    age INT CHECK (age >= 18)
+);
+```
+
+**DEFAULT:**
+
+-   Устанавливает значение по умолчанию для столбца, если значение не указано при вставке.
+
+```sql
+CREATE TABLE tasks (
+    task_id INT PRIMARY KEY,
+    status VARCHAR(20) DEFAULT 'Pending'
+);
+```

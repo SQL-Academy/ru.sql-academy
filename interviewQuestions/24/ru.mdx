@@ -1,0 +1,31 @@
+---
+meta:
+    title: 'Как использовать оператор CASE в SQL?'
+    description: 'Оператор CASE в SQL используется для условной логики в запросах. Узнайте, как применять CASE для присвоения значений на основе условий.'
+---
+
+Оператор `CASE` используется для реализации условной логики в SQL-запросах.
+Он позволяет возвращать значения на основе условий, подобно оператору `IF-ELSE`.
+
+```sql
+CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    ...
+    ELSE default_result
+END
+```
+
+## Примеры
+
+-   Присвоение категорий на основе зарплаты:
+    ```sql
+    SELECT name,
+        salary,
+        CASE
+            WHEN salary >= 80000 THEN 'Высокая'
+            WHEN salary >= 50000 THEN 'Средняя'
+            ELSE 'Низкая'
+        END AS salary_category
+    FROM employees;
+    ```

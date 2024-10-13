@@ -1,0 +1,61 @@
+---
+meta:
+    title: 'Что такое Self-Join и когда он используется?'
+    description: 'Self-Join в SQL объединяет таблицу с самой собой, что полезно для обработки иерархий и сравнения строк. Узнайте, как и когда использовать Self-Join.'
+---
+
+> **Self-Join** — это тип соединения в SQL, когда таблица объединяется сама с собой.
+> Это полезно, когда нужно сравнить строки одной таблицы между собой или обработать иерархические данные.
+
+## Когда используется Self-Join:
+
+-   **Иерархические структуры**
+    Например, в таблице сотрудников, где каждый сотрудник может иметь менеджера,
+    также являющегося сотрудником в той же таблице.
+-   **Сравнение записей**
+    Для нахождения дубликатов или сравнения значений в разных строках одной таблицы.
+
+## Пример
+
+export const exampleFields = ['employeeId', 'name', 'managerId'];
+export const exampleRows = [
+    {
+        employeeId: 1,
+        name: 'John',
+        managerId: null,
+    },
+    {
+        employeeId: 2,
+        name: 'Michail',
+        managerId: 1,
+    },
+    {
+        employeeId: 3,
+        name: 'Alisa',
+        managerId: 1,
+    },
+    {
+        employeeId: 4,
+        name: 'Max',
+        managerId: 2,
+    },
+];
+
+<QueryTable
+    tableData={{
+        fields: exampleFields,
+        rows: exampleRows,
+    }}
+    maxLines={4}
+/>
+
+Чтобы получить список сотрудников и их менеджеров:
+
+```sql
+SELECT e.name AS Employee, m.name AS Manager
+FROM Employee e
+LEFT JOIN Employee m ON e.managerId = m.employeeId;
+```
+
+В этом запросе мы соединяем таблицу `Employee` с самой собой,
+чтобы сопоставить каждого сотрудника с его менеджером.

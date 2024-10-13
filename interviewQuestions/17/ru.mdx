@@ -1,0 +1,52 @@
+---
+meta:
+    title: 'Что такое хранимая процедура и как она отличается от функции?'
+    description: 'Хранимая процедура выполняет набор команд в SQL, а функция возвращает значение и может использоваться в запросах. Узнайте ключевые различия между ними.'
+---
+
+## Хранимая процедура (Stored Procedure):
+
+-   Набор SQL-команд, сохраненных на сервере для повторного использования.
+-   Может выполнять операции `SELECT`, `INSERT`, `UPDATE`, `DELETE`.
+-   Может возвращать несколько наборов результатов или ничего не возвращать.
+-   Может иметь входные и выходные параметры.
+-   Не может быть вызвана внутри SQL-запроса.
+
+Пример хранимой процедуры:
+
+```sql
+CREATE PROCEDURE GetEmployeeByID(IN emp_id INT)
+BEGIN
+    SELECT * FROM employees WHERE id = emp_id;
+END;
+```
+
+Вызов процедуры:
+
+```sql
+CALL GetEmployeeByID(1);
+```
+
+## Функция (Function):
+
+-   Возвращает одно значение (скалярная функция) или таблицу (табличная функция).
+-   Может использоваться в SQL-выражениях (например, в SELECT или WHERE).
+-   Должна возвращать значение.
+-   Обычно используется для вычислений и возвращает детерминированный результат.
+
+Пример функции:
+
+```sql
+CREATE FUNCTION GetEmployeeSalary(emp_id INT) RETURNS DECIMAL(10,2)
+BEGIN
+    DECLARE salary DECIMAL(10,2);
+    SELECT e.salary INTO salary FROM employees e WHERE e.id = emp_id;
+    RETURN salary;
+END;
+```
+
+Использование функции:
+
+```sql
+SELECT name, GetEmployeeSalary(id) FROM employees;
+```

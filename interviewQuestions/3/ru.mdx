@@ -1,0 +1,35 @@
+---
+meta:
+    title: 'Что такое первичный ключ и внешний ключ?'
+    description: 'Первичный ключ — уникальный идентификатор записи, внешний ключ — связывает таблицы, поддерживая целостность данных в базе данных.'
+---
+
+## Первичный ключ (PRIMARY KEY):
+
+-   Уникальный идентификатор записи в таблице.
+-   Не допускает дубликатов и `NULL` значений.
+-   Может состоять из одного или нескольких столбцов (составной ключ).
+
+```sql
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    age INT
+);
+```
+
+## Внешний ключ (FOREIGN KEY):
+
+-   Столбец или набор столбцов, которые ссылаются на первичный ключ другой таблицы.
+-   Обеспечивает ссылочную целостность между таблицами.
+-   Позволяет связать записи из разных таблиц.
+
+```sql
+CREATE TABLE enrollments (
+    enrollment_id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+```

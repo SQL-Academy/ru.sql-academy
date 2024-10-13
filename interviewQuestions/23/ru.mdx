@@ -1,0 +1,55 @@
+---
+meta:
+    title: 'Что такое NULL и как с ним работать в SQL?'
+    description: 'NULL в SQL обозначает отсутствие данных. Узнайте, как работать с NULL с помощью операторов IS NULL, IS NOT NULL и функций COALESCE, ISNULL, IFNULL.'
+---
+
+> **NULL** — это специальное значение в SQL, обозначающее отсутствие данных или неизвестное значение.
+
+## Особенности NULL:
+
+-   `NULL` не эквивалентно пустой строке или нулю.
+-   Операции с `NULL` возвращают `NULL`.
+-   Сравнение `NULL` = `NULL` возвращает `FALSE`.
+
+## Работа с NULL
+
+Для проверки на `NULL` используется оператор `IS NULL` или `IS NOT NULL`.
+
+```sql
+-- Поиск записей с неизвестной датой рождения
+SELECT * FROM employees WHERE birth_date IS NULL;
+
+-- Поиск записей с известной датой рождения
+SELECT * FROM employees WHERE birth_date IS NOT NULL;
+```
+
+## Функции для работы с NULL
+
+-   <a href="/handbook/COALESCE" target="_blank">
+        **COALESCE**
+    </a>
+    Возвращает первый элемент списка не равный `NULL`
+
+    ```sql
+    COALESCE(val1[, val2, ...., val_n])
+    ```
+
+-   <a href="/handbook/ISNULL" target="_blank">
+        **ISNULL**
+    </a>
+    Возвращает 1 или 0 в зависимости равно ли выражение `NULL`
+
+    ```sql
+    ISNULL(value)
+    ```
+
+-   <a href="/handbook/IFNULL" target="_blank">
+        **IFNULL**
+    </a>
+    Возвращает значение, переданное 1-ым аргументом, если оно не равно `NULL`. В противном
+    случае, возвращает значение переданное вторым аргументом.
+
+    ```sql
+    IFNULL(value, alternative_value)
+    ```
