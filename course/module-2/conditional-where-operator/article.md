@@ -63,14 +63,14 @@ WHERE first_name = "Grigorij" AND YEAR(birthday) > 2000;
 ```sql
 SELECT
     2 = 1,
-	'a' = 'a',
+    'a' = 'a',
     1 <=> NULL,
-	NULL <=> NULL,
-	2 <> 2,
-	3 < 4,
-	10 <= 10,
-	7 > 1,
-	8 >= 10;
+    NULL <=> NULL,
+    2 <> 2,
+    3 < 4,
+    10 <= 10,
+    7 > 1,
+    8 >= 10;
 ```
 
 | 2 = 1 | 'a' = 'a' | 1 <=> NULL | NULL <=> NULL | 2 <> 2 | 3 < 4 | 10 <= 10 | 7 > 1 | 8 >= 10 |
