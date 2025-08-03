@@ -1,7 +1,7 @@
 ---
 meta:
-    title: 'Оператор LIKE'
-    description: 'Синтаксис SQL оператор LIKE для поиска записей по шаблонной строке'
+  title: "Оператор LIKE"
+  description: "Синтаксис SQL оператор LIKE и ILIKE для поиска записей по шаблонной строке"
 ---
 
 # Оператор LIKE
@@ -10,17 +10,9 @@ meta:
 
 Например, у нас есть таблица `Users`, в которой есть поле `email`:
 
-```sql
+```sql-executable-Airbnb
 SELECT name, email FROM Users;
 ```
-
-| name              | email                 |
-| ----------------- | --------------------- |
-| Bruce Willis      | barjam@hotmail.com    |
-| George Clooney    | tellis@me.com         |
-| Kevin Costner     | metzzo@hotmail.com    |
-| Samuel L. Jackson | moonlapse@outlook.com |
-| Kurt Russell      | gator@live.com        |
 
 Допустим, мы хотим найти всех пользователей, чья почта лежит в домене второго уровня «hotmail». Т.е. нужно отобрать только те записи, что
 отвечают условию:
@@ -45,19 +37,10 @@ SELECT name, email FROM Users;
 
 Так наш запрос на поиск пользователей в домене «hotmail» может выглядеть следующим образом:
 
-```sql
+```sql-executable-Airbnb
 SELECT name, email FROM Users
 WHERE email LIKE '%@hotmail.%'
 ```
-
-| name                 | email                |
-| -------------------- | -------------------- |
-| Bruce Willis         | barjam@hotmail.com   |
-| Kevin Costner        | metzzo@hotmail.com   |
-| Jennifer Lopez       | barjam@hotmail.com   |
-| Harrison Ford        | kostas@hotmail.com   |
-| Michael Douglas      | timtroyr@hotmail.com |
-| Catherine Zeta-Jones | flakeg@hotmail.com   |
 
 ## Примеры
 
@@ -84,7 +67,17 @@ WHERE email LIKE '%@hotmail.%'
     ```
     Сопоставляется строкам, начинающихся на «begin» и заканчивающихся на «end»
 
+<MySQLOnly>
+
 > В MySQL по умолчанию шаблоны не чувствительны к регистру
+
+</MySQLOnly>
+
+<PostgreSQLOnly>
+
+> В PostgreSQL шаблоны чувствительны к регистру. Для поиска без учета регистра используйте оператор `ILIKE`
+
+</PostgreSQLOnly>
 
 ## ESCAPE-символ
 
@@ -105,3 +98,8 @@ WHERE progress LIKE '3!%' ESCAPE '!';
 ```
 
 Если бы мы не экранировали трафаретный символ, то в выборку попало бы всё, что начинается на 3.
+
+## Интерактивное упражнение
+
+Теперь давайте закрепим полученные знания на практике!  
+В упражнении ниже вам нужно распределить email адреса по колонкам в соответствии с заданными `LIKE` шаблонами.

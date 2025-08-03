@@ -1,7 +1,7 @@
 ---
 meta:
-    title: 'Удаление данных, оператор DELETE'
-    description: 'Удалить записи в sql. SQL операторы delete, truncate и их отличия. Delete запрос c join'
+  title: "Удаление данных, оператор DELETE"
+  description: "Удалить записи в sql. SQL операторы delete, truncate и их отличия. Delete запрос c join"
 ---
 
 # Удаление данных, оператор DELETE
@@ -27,7 +27,11 @@ DELETE FROM имя_таблицы
 TRUNCATE TABLE имя_таблицы;
 ```
 
+<MySQLOnly>
+
 > Оптимизатор запросов СУБД MySQL автоматически использует оператор `TRUNCATE`, если оператор `DELETE` не содержит условия `WHERE` или конструкции `LIMIT`.
+
+</MySQLOnly>
 
 Однако у оператора `TRUNCATE` есть ряд отличий:
 
@@ -49,6 +53,8 @@ ON имя_таблицы_1.поле = имя_таблицы_2.поле
 
 Например, нам необходимо удалить все бронирования жилья, в котором отсутствует кухня. Тогда запрос будет выглядеть следующим образом:
 
+<MySQLOnly>
+
 ```sql
 DELETE Reservations FROM
 Reservations JOIN Rooms ON
@@ -56,7 +62,22 @@ Reservations.room_id = Rooms.id
 WHERE Rooms.has_kitchen = false;
 ```
 
+</MySQLOnly>
+
+<PostgreSQLOnly>
+
+```sql
+DELETE FROM Reservations
+USING Rooms
+WHERE Reservations.room_id = Rooms.id
+AND Rooms.has_kitchen = false;
+```
+
+</PostgreSQLOnly>
+
 Если бы, помимо удаления бронирования, нам нужно было также удалить и жилье, то запрос приобрёл бы следующий вид:
+
+<MySQLOnly>
 
 ```sql
 DELETE Reservations, Rooms FROM
@@ -64,3 +85,23 @@ Reservations JOIN Rooms ON
 Reservations.room_id = Rooms.id
 WHERE Rooms.has_kitchen = false;
 ```
+
+</MySQLOnly>
+
+<PostgreSQLOnly>
+
+В PostgreSQL для удаления из нескольких таблиц одновременно используются отдельные DELETE запросы или транзакции:
+
+```sql
+BEGIN;
+DELETE FROM Reservations
+USING Rooms
+WHERE Reservations.room_id = Rooms.id
+AND Rooms.has_kitchen = false;
+
+DELETE FROM Rooms
+WHERE Rooms.has_kitchen = false;
+COMMIT;
+```
+
+</PostgreSQLOnly>
