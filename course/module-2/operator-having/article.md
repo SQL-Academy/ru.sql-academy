@@ -38,7 +38,7 @@ WHERE avg_price > 50
 ```sql
 SELECT home_type, AVG(price) as avg_price FROM Rooms
 GROUP BY home_type
-HAVING avg_price > 50
+HAVING AVG(price) > 50
 ```
 
 | home_type       | avg_price |
