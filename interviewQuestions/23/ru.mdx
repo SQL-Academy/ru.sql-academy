@@ -29,7 +29,7 @@ SELECT * FROM employees WHERE birth_date IS NOT NULL;
 -   <a href="/handbook/COALESCE" target="_blank">
         **COALESCE**
     </a>
-    Возвращает первый элемент списка не равный `NULL`
+    Возвращает первый элемент списка, не равный `NULL`
 
     ```sql
     COALESCE(val1[, val2, ...., val_n])
@@ -38,7 +38,7 @@ SELECT * FROM employees WHERE birth_date IS NOT NULL;
 -   <a href="/handbook/ISNULL" target="_blank">
         **ISNULL**
     </a>
-    Возвращает 1 или 0 в зависимости равно ли выражение `NULL`
+    Возвращает 1 или 0 в зависимости от того, равно ли выражение `NULL`
 
     ```sql
     ISNULL(value)
@@ -47,8 +47,8 @@ SELECT * FROM employees WHERE birth_date IS NOT NULL;
 -   <a href="/handbook/IFNULL" target="_blank">
         **IFNULL**
     </a>
-    Возвращает значение, переданное 1-ым аргументом, если оно не равно `NULL`. В противном
-    случае, возвращает значение переданное вторым аргументом.
+    Возвращает значение, переданное 1-ым аргументом, если оно не равно `NULL`. В противном случае возвращает значение, переданное
+    вторым аргументом.
 
     ```sql
     IFNULL(value, alternative_value)

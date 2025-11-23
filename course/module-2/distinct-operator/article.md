@@ -133,7 +133,7 @@ SELECT DISTINCT class FROM Student_in_class;
 | John       | Scott     |
 | John       | Hartman   |
 
-запрос с оператором `DISTINCT` вернул бы все сочетания имён и фамилий кроме дублирующихся «John Scott».
+запрос с оператором `DISTINCT` вернул бы все сочетания имён и фамилий, кроме дублирующихся «John Scott».
 
 ```sql
 SELECT DISTINCT first_name, last_name FROM User;
