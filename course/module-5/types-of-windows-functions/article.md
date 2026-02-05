@@ -86,6 +86,6 @@ SELECT id,
 	LAG(price, 2) OVER(PARTITION BY home_type ORDER BY price) AS 'lag_2',
 	LEAD(price) OVER(PARTITION BY home_type ORDER BY price) AS 'lead',
 	FIRST_VALUE(price) OVER(PARTITION BY home_type ORDER BY price) AS 'first_value',
-	LAST_VALUE(price) OVER(PARTITION BY home_type ORDER BY price) AS 'last_value'
+	LAST_VALUE(price) OVER(PARTITION BY home_type ORDER BY price ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS "last_value"
 FROM Rooms;
 ```
