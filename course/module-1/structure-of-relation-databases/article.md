@@ -15,21 +15,23 @@ meta:
 В реляционных базах данных информация хранится в связанных друг с другом таблицах.
 Сами же таблицы состоят из:
 
--   строк, которые называют «записями»
--   столбцов, которые называют «полями» или же «атрибутами»
+- строк, которые называют «записями»
+- столбцов, которые называют «полями» или же «атрибутами»
 
 ![Структура таблицы](https://sql-academy.org/static/guidePage/structure-of-relation-databases/ru_structure_db.png 'Структура таблицы')
 
 В каждой таблице каждый столбец имеет заранее определённый тип данных. Например, такими типами могут выступать:
 
--   `VARCHAR` (строковый тип данных)
--   `INTEGER` (числовой тип данных)
--   `DATETIME` (тип данных для даты и времени) и прочие
+- `VARCHAR` (строковый тип данных)
+- `INTEGER` (числовой тип данных)
+- `DATETIME` (тип данных для даты и времени) и прочие
 
 И каждая строка таблицы должна иметь соответствующий тип для каждого столбца. СУБД не допустит попытку добавления
 в поле с типом `DATETIME` произвольной строки.
 
-Для того чтобы узнать типы данных атрибутов, можно выполнить SQL команду `DESCRIBE` и указать название таблицы:
+Для того чтобы узнать типы данных атрибутов, можно выполнить SQL команду и указать название таблицы.
+
+Для MySQL нужно выполнить SQL-команду `DESCRIBE`
 
 ```sql
 DESCRIBE FamilyMembers
@@ -41,6 +43,22 @@ DESCRIBE FamilyMembers
 | status      | varchar(50) | NO   |     |
 | member_name | varchar(50) | NO   |     |
 | birthday    | datetime    | NO   |     |
+
+Для PostgreSQL можно воспользоваться SQL-запросом к информационной схеме:
+
+```sql
+SELECT column_name, data_type, is_nullable
+FROM information_schema.columns
+WHERE table_name = 'familymembers'
+  AND table_schema = current_schema();
+```
+
+| column_name | data_type                   | is_nullable |
+| ----------- | --------------------------- | ----------- |
+| member_id   | integer                     | NO          |
+| status      | character varying           | NO          |
+| member_name | character varying           | NO          |
+| birthday    | timestamp without time zone | NO          |
 
 Или же посмотреть на ER-диаграмму схемы базы данных:
 
