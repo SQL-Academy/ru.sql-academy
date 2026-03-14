@@ -67,7 +67,7 @@ CAST(значение AS тип_для_конвертации);
 Например,
 
 ```sql-executable
-SELECT CAST(12005.6 AS NUMERIC) AS cast_example, 12005.4::NUMERIC AS operator_example;
+SELECT CAST(12005.6 AS INTEGER) AS cast_example, 12005.4::INTEGER AS operator_example;
 ```
 
 </PostgreSQLOnly>
