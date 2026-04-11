@@ -1,10 +1,10 @@
 ---
 meta:
-    title: 'Операторы IF, CASE, WHILE в хранимых процедурах'
-    description: 'Изучите операторы ветвления и циклы в хранимых процедурах SQL. Синтаксис и примеры IF, CASE, WHILE для MySQL и PostgreSQL.'
+    title: 'Операторы IF, CASE, WHILE в хранимых процедурах и функциях'
+    description: 'Изучите операторы ветвления и циклы в хранимых процедурах и функциях SQL. Синтаксис и примеры IF, CASE, WHILE для MySQL и PostgreSQL.'
 ---
 
-# Операторы IF, CASE, WHILE в хранимых процедурах
+# Операторы IF, CASE, WHILE в хранимых процедурах и функциях
 
 Хранимые процедуры и функции — это не просто удобные контейнеры для группы запросов. Они позволяют реализовать достаточно сложную логику, используя операторы ветвления и циклы.
 
@@ -46,9 +46,9 @@ END IF;
 
 ### Пример использования IF
 
-Создадим процедуру, которая определяет категорию студента по возрасту:
-
 <MySQLOnly>
+
+Создадим процедуру, которая определяет категорию студента по возрасту:
 
 ```sql-executable-Schedule
 CREATE PROCEDURE categorize_student_by_age(
@@ -82,6 +82,8 @@ SELECT @category AS age_category;
 </MySQLOnly>
 
 <PostgreSQLOnly>
+
+Создадим функцию, которая определяет категорию студента по возрасту:
 
 ```sql-executable-Schedule
 CREATE OR REPLACE FUNCTION categorize_student_by_age(student_id INT)
@@ -149,9 +151,9 @@ END CASE;
 
 ### Пример использования CASE
 
-Создадим ту же процедуру категоризации студентов, но используя оператор CASE:
-
 <MySQLOnly>
+
+Создадим ту же процедуру категоризации студентов, но используя оператор CASE:
 
 ```sql-executable-Schedule
 CREATE PROCEDURE categorize_student_with_case(
@@ -183,6 +185,8 @@ SELECT @category AS age_category;
 </MySQLOnly>
 
 <PostgreSQLOnly>
+
+Создадим ту же функцию категоризации студентов, но используя оператор CASE:
 
 ```sql-executable-Schedule
 CREATE OR REPLACE FUNCTION categorize_student_with_case(student_id INT)
@@ -244,7 +248,7 @@ END LOOP;
 
 ### Пример использования WHILE
 
-Создадим процедуру для создания нескольких тестовых предметов:
+Рассмотрим пример хранимой процедуры для создания нескольких тестовых предметов:
 
 <MySQLOnly>
 

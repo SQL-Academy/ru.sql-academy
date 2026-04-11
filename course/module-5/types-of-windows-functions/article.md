@@ -11,7 +11,7 @@ meta:
 
 ## Виды оконных функций
 
-![Категории оконных функций](https://sql-academy.org/static/guidePage/types-of-windows-functions/categories_of_windows_functions.png "Категории оконных функций")
+![Категории оконных функций](https://sql-academy.org/static/guidePage/types-of-windows-functions/categories_of_windows_functions.png 'Категории оконных функций')
 
 Оконные функции можно разделить на 3 группы:
 
@@ -33,11 +33,11 @@ meta:
 SELECT id,
 	home_type,
 	price,
-	SUM(price) OVER(PARTITION BY home_type) AS 'Sum',
-	COUNT(price) OVER(PARTITION BY home_type) AS 'Count',
-	AVG(price) OVER(PARTITION BY home_type) AS 'Avg',
-	MAX(price) OVER(PARTITION BY home_type) AS 'Max',
-	MIN(price) OVER(PARTITION BY home_type) AS 'Min'
+	SUM(price) OVER(PARTITION BY home_type) AS "Sum",
+	COUNT(price) OVER(PARTITION BY home_type) AS "Count",
+	AVG(price) OVER(PARTITION BY home_type) AS "Avg",
+	MAX(price) OVER(PARTITION BY home_type) AS "Max",
+	MIN(price) OVER(PARTITION BY home_type) AS "Min"
 FROM Rooms;
 ```
 
@@ -47,22 +47,22 @@ FROM Rooms;
 
 В ранжирующих функциях под ключевым словом `OVER` обязательным идёт указание условия `ORDER BY`, по которому будет происходить сортировка ранжирования.
 
-  - `ROW_NUMBER` — возвращает номер строки, используется для нумерации;
-  - `RANK` — возвращает ранг каждой строки. Вот как это работает:
-  - Сортировка: во-первых, строки сортируются по одному или нескольким столбцам. Эти столбцы указываются в `ORDER BY` в конструкции `OVER`.
-  - Присвоение рангов: каждой уникальной строке или группе строк, имеющих одинаковые значения в столбцах сортировки, присваивается ранг. Ранг начинается с 1.
-  - Одинаковые значения: если у нескольких строк одинаковые значения в столбцах сортировки, они получают одинаковый ранг. Например, если две строки занимают второе место, обе получают ранг 2.
-  - Пропуск рангов: после группы строк с одинаковым рангом, следующий ранг увеличивается на количество строк в этой группе. Например, если две строки имеют ранг 2, следующая строка получит ранг 4, а не 3.
-  - Продолжение сортировки: этот процесс продолжается до тех пор, пока не будут присвоены ранги всем строкам в наборе результатов.
-  - `DENSE_RANK` — возвращает ранг каждой строки. Но в отличие от функции `RANK`, она не пропускает ранги и после группы одинаковых значений ранг увеличивается на единицу, а не на количество строк. Например, если две строки имеют ранг 2, следующая строка получит ранг 3, а не 4.
+- `ROW_NUMBER` — возвращает номер строки, используется для нумерации;
+- `RANK` — возвращает ранг каждой строки. Вот как это работает:
+- Сортировка: во-первых, строки сортируются по одному или нескольким столбцам. Эти столбцы указываются в `ORDER BY` в конструкции `OVER`.
+- Присвоение рангов: каждой уникальной строке или группе строк, имеющих одинаковые значения в столбцах сортировки, присваивается ранг. Ранг начинается с 1.
+- Одинаковые значения: если у нескольких строк одинаковые значения в столбцах сортировки, они получают одинаковый ранг. Например, если две строки занимают второе место, обе получают ранг 2.
+- Пропуск рангов: после группы строк с одинаковым рангом, следующий ранг увеличивается на количество строк в этой группе. Например, если две строки имеют ранг 2, следующая строка получит ранг 4, а не 3.
+- Продолжение сортировки: этот процесс продолжается до тех пор, пока не будут присвоены ранги всем строкам в наборе результатов.
+- `DENSE_RANK` — возвращает ранг каждой строки. Но в отличие от функции `RANK`, она не пропускает ранги и после группы одинаковых значений ранг увеличивается на единицу, а не на количество строк. Например, если две строки имеют ранг 2, следующая строка получит ранг 3, а не 4.
 
 ```sql-Airbnb-executable
 SELECT id,
 	home_type,
 	price,
-	ROW_NUMBER() OVER(PARTITION BY home_type ORDER BY price) AS 'row_number',
-	RANK() OVER(PARTITION BY home_type ORDER BY price) AS 'rank',
-	DENSE_RANK() OVER(PARTITION BY home_type ORDER BY price) AS 'dense_rank'
+	ROW_NUMBER() OVER(PARTITION BY home_type ORDER BY price) AS "row_number",
+	RANK() OVER(PARTITION BY home_type ORDER BY price) AS "rank",
+	DENSE_RANK() OVER(PARTITION BY home_type ORDER BY price) AS "dense_rank"
 FROM Rooms;
 ```
 
@@ -72,7 +72,7 @@ FROM Rooms;
 
 - `LAG` — обращается к данным из предыдущих строк окна.
 
-  Имеет три аргумента: столбец, значение которого необходимо вернуть, количество строк для смещения (по-умолчанию 1), значение, которое необходимо вернуть, если после смещения возвращается значение `NULL`.
+    Имеет три аргумента: столбец, значение которого необходимо вернуть, количество строк для смещения (по-умолчанию 1), значение, которое необходимо вернуть, если после смещения возвращается значение `NULL`.
 
 - `LEAD` — обращается к данным из следующих строк. Аналогично `LAG` имеет 3 аргумента.
 - `FIRST_VALUE` — возвращает первое значение в окне. В качестве аргумента принимает столбец, значение которого необходимо вернуть.
@@ -82,10 +82,10 @@ FROM Rooms;
 SELECT id,
 	home_type,
 	price,
-	LAG(price) OVER(PARTITION BY home_type ORDER BY price) AS 'lag',
-	LAG(price, 2) OVER(PARTITION BY home_type ORDER BY price) AS 'lag_2',
-	LEAD(price) OVER(PARTITION BY home_type ORDER BY price) AS 'lead',
-	FIRST_VALUE(price) OVER(PARTITION BY home_type ORDER BY price) AS 'first_value',
-	LAST_VALUE(price) OVER(PARTITION BY home_type ORDER BY price) AS 'last_value'
+	LAG(price) OVER(PARTITION BY home_type ORDER BY price) AS "lag",
+	LAG(price, 2) OVER(PARTITION BY home_type ORDER BY price) AS "lag_2",
+	LEAD(price) OVER(PARTITION BY home_type ORDER BY price) AS "lead",
+	FIRST_VALUE(price) OVER(PARTITION BY home_type ORDER BY price) AS "first_value",
+	LAST_VALUE(price) OVER(PARTITION BY home_type ORDER BY price ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS "last_value"
 FROM Rooms;
 ```
