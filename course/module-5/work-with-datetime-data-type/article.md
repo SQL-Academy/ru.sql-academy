@@ -167,9 +167,9 @@ SELECT CURRENT_DATE, CURRENT_TIME, NOW();
 
 </PostgreSQLOnly>
 
-## Отличие DATETIME от TIMESTAMP
-
 <MySQLOnly>
+
+## MySQL: отличие DATETIME от TIMESTAMP
 
 В MySQL есть очень похожие друг на друга типы данных: `DATETIME` и `TIMESTAMP`. Они оба направлены на хранение даты и времени, но имеют ряд отличий, определяющих их целевое использование.
 
@@ -181,6 +181,8 @@ SELECT CURRENT_DATE, CURRENT_TIME, NOW();
 </MySQLOnly>
 
 <PostgreSQLOnly>
+
+## PostgreSQL: отличие TIMESTAMP и TIMESTAMPTZ
 
 В PostgreSQL основными типами для хранения даты и времени являются `TIMESTAMP` (без часового пояса) и `TIMESTAMPTZ` (с часовым поясом).
 
