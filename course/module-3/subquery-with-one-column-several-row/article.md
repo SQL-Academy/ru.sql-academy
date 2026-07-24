@@ -1,12 +1,12 @@
 ---
 meta:
-    title: 'Подзапросы с несколькими строками и одним столбцом'
-    description: 'Подзапросы с использованием операторов ANY, IN, ALL'
+    title: "Подзапросы с несколькими строками и одним столбцом"
+    description: "Подзапросы с использованием операторов ANY, IN, ALL"
 ---
 
 # Подзапросы с несколькими строками и одним столбцом
 
-Если подзапрос возвращает более одной строки, его нельзя просто использовать с операторами сравнения, как это можно было делать <a href="https://sql-academy.org/guide/subquery-with-one-column-one-row" target="_blank"> со скалярными подзапросами</a>.
+Если подзапрос возвращает более одной строки, его нельзя просто использовать с операторами сравнения, как это можно было делать <a href="https://sql-academy.org/ru/guide/subquery-with-one-column-one-row" target="_blank"> со скалярными подзапросами</a>.
 
 Однако c подзапросами, возвращающими несколько строк и один столбец, можно использовать 3 дополнительных оператора.
 
@@ -15,7 +15,7 @@ meta:
 С помощью оператора `ALL` мы можем сравнивать отдельное значение с каждым значением в наборе, полученным подзапросом.
 При этом данное условие вернёт `TRUE`, только если все сравнения отдельного значения со значениями в наборе вернут `TRUE`.
 
-Например, нижеприведённый синтетический запрос проверяет, для всех ли жилых помещений выполняется условие, что оно дешевле, чем 200.
+Например, нижеприведённый синтетический запрос проверяет, для всех ли жилых помещений выполняется условие, что оно дешевле чем 200.
 
 ```sql
 SELECT 200 > ALL(SELECT price FROM Rooms)
@@ -24,28 +24,30 @@ SELECT 200 > ALL(SELECT price FROM Rooms)
 Или же, более практический пример: нам необходимо найти имена всех владельцев жилья, которые сами при этом никогда не снимали жилье.
 Чтобы получить данный список, мы можем действовать следующим образом:
 
-<ERD databaseName="Airbnb" />
+ER-диаграмма базы данных Airbnb: [открыть на SQL Academy](https://sql-academy.org/ru/guide/subquery-with-one-column-several-row).
 
 - Получить список имён всех владельцев жилья
-  ```sql
-  SELECT DISTINCT name FROM Users INNER JOIN Rooms
-  ON Users.id = Rooms.owner_id
-  ```
+
+    ```sql
+    SELECT DISTINCT name FROM Users INNER JOIN Rooms
+    ON Users.id = Rooms.owner_id
+    ```
+
 - Получить список идентификаторов всех пользователей, снимавших жилье
 
-  ```sql
-  SELECT DISTINCT user_id FROM Reservations
-  ```
+    ```sql
+    SELECT DISTINCT user_id FROM Reservations
+    ```
 
 - Отфильтровать первый список всех владельцев по условию, что идентификатор владельца жилья не равен ни одному из идентификаторов пользователей, когда-либо снимавших жилье
 
-  ```sql
-  SELECT DISTINCT name FROM Users INNER JOIN Rooms
-      ON Users.id = Rooms.owner_id
-      WHERE Users.id <> ALL (
-          SELECT DISTINCT user_id FROM Reservations
-      )
-  ```
+    ```sql
+    SELECT DISTINCT name FROM Users INNER JOIN Rooms
+        ON Users.id = Rooms.owner_id
+        WHERE Users.id <> ALL (
+            SELECT DISTINCT user_id FROM Reservations
+        )
+    ```
 
 ## Подзапрос и оператор IN
 

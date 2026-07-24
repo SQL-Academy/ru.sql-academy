@@ -1,12 +1,12 @@
 ---
 meta:
-  title: "Работа с датами и временем в SQL: MySQL и PostgreSQL"
-  description: "Функции для работы с датами и временем в MySQL и PostgreSQL. Типы данных DATE, TIME, DATETIME, TIMESTAMP и их отличия."
+    title: "Работа с датами и временем в SQL: MySQL и PostgreSQL"
+    description: "Функции для работы с датами и временем в MySQL и PostgreSQL. Типы данных DATE, TIME, DATETIME, TIMESTAMP и их отличия."
 ---
 
 # Работа с датами и временем
 
-<MySQLOnly>
+**MySQL**
 
 Для работы с датой и временем в MySQL есть несколько типов данных: `DATE`, `TIME`, `DATETIME` и `TIMESTAMP`.
 
@@ -17,9 +17,7 @@ meta:
 | `DATETIME`  | Хранит значение даты и времени в виде ГГГГ-MM-ДД ЧЧ:ММ:СС. <br /> Например, 2022-12-05 10:37:22                                            | от 1000-01-01 00:00:00 до 9999-12-31 23:59:59 | 8 байта |
 | `TIMESTAMP` | Хранит значение даты и времени в виде ГГГГ-MM-ДД ЧЧ:ММ:СС. <br /> Например, 2022-12-05 10:37:22                                            | от 1970-01-01 00:00:01 до 2038-01-19 03:14:07 | 4 байта |
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 Для работы с датой и временем в PostgreSQL есть несколько типов данных: `DATE`, `TIME`, `TIMESTAMP`, `TIMESTAMPTZ` и `INTERVAL`.
 
@@ -31,9 +29,7 @@ meta:
 | `TIMESTAMPTZ` | Хранит значение даты и времени с часовым поясом. <br /> Например, 2022-12-05 10:37:22+03 | от 4713 BC до 294276 AD            | 8 байт  |
 | `INTERVAL`    | Хранит интервал времени. <br /> Например, 1 year 2 months 3 days 4 hours                 | от -178000000 лет до 178000000 лет | 16 байт |
 
-</PostgreSQLOnly>
-
-<MySQLOnly>
+**MySQL**
 
 ## Отличие TIMESTAMP и DATETIME
 
@@ -54,6 +50,10 @@ SET @@session.time_zone="+03:00"; -- меняем часовой пояс в MYS
 SELECT * FROM datetime_table;
 ```
 
+| datetime_field      |
+| ------------------- |
+| 2022-06-16 16:37:23 |
+
 ## TIMESTAMP
 
 Хранит, сколько прошло секунд с 1970-01-01 00:00:00 по нулевому часовому поясу, и занимает 4 байта.
@@ -69,12 +69,14 @@ SET @@session.time_zone="+03:00"; -- меняем часовой пояс в MYS
 SELECT * FROM timestamp_table;
 ```
 
+| timestamp_field     |
+| ------------------- |
+| 2022-06-16 19:37:23 |
+
 Также стоит помнить о существующем ограничении `TIMESTAMP` в диапазоне возможных значений от 1970-01-01 00:00:01 до 2038-01-19 03:14:07, что ограничивает его применение.
 Так, данный тип данных не подойдёт для хранения дат рождения пользователей.
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 ## Отличие TIMESTAMP и TIMESTAMPTZ
 
@@ -120,11 +122,9 @@ SELECT '2 weeks'::INTERVAL;
 SELECT '90 minutes'::INTERVAL;
 ```
 
-</PostgreSQLOnly>
-
 ## Способ задания значений
 
-<MySQLOnly>
+**MySQL**
 
 Значения `DATETIME`, `DATE` и `TIMESTAMP` могут быть заданы одним из следующих способов:
 
@@ -133,7 +133,7 @@ SELECT '90 minutes'::INTERVAL;
 
 При указании даты допускается использовать любой знак пунктуации в качестве разделительного между частями разделов даты или времени. Также возможно задавать дату вообще без разделительного знака, слитно.
 
-```sql-executable
+```sql
 CREATE TABLE date_table (datetime TIMESTAMP);
 INSERT INTO date_table VALUES("2022-06-16 16:37:23");
 INSERT INTO date_table VALUES("22.05.31 8+15+04");
@@ -143,9 +143,15 @@ INSERT INTO date_table VALUES("2021-02-12");
 SELECT * FROM date_table;
 ```
 
-</MySQLOnly>
+| datetime            |
+| ------------------- |
+| 2022-06-16 16:37:23 |
+| 2022-05-31 08:15:04 |
+| 2014-02-22 16:37:22 |
+| 2022-06-16 16:37:23 |
+| 2021-02-12 00:00:00 |
 
-<PostgreSQLOnly>
+**PostgreSQL**
 
 Значения типов даты и времени могут быть заданы в различных форматах:
 
@@ -154,7 +160,7 @@ SELECT * FROM date_table;
 - Только дата: 'YYYY-MM-DD'
 - Только время: 'HH:MM:SS'
 
-```sql-executable
+```sql
 CREATE TABLE date_table (
     date_field DATE,
     time_field TIME,
@@ -173,5 +179,3 @@ SELECT * FROM date_table;
 ```
 
 PostgreSQL строго следует стандарту ISO 8601 и предпочитает использовать стандартные форматы дат.
-
-</PostgreSQLOnly>

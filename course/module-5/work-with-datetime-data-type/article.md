@@ -1,7 +1,7 @@
 ---
 meta:
-  title: "Дата и время в SQL: функции YEAR, MONTH, TIMESTAMPDIFF, STR_TO_DATE"
-  description: "Работа с датой и временем в SQL: функции YEAR, MONTH, DAY, TIMESTAMPDIFF, STR_TO_DATE, EXTRACT. Типы данных DATE, TIME, DATETIME, TIMESTAMP в MySQL и PostgreSQL."
+    title: "Дата и время в SQL: функции YEAR, MONTH, TIMESTAMPDIFF, STR_TO_DATE"
+    description: "Работа с датой и временем в SQL: функции YEAR, MONTH, DAY, TIMESTAMPDIFF, STR_TO_DATE, EXTRACT. Типы данных DATE, TIME, DATETIME, TIMESTAMP в MySQL и PostgreSQL."
 ---
 
 # Дата и время в SQL
@@ -26,7 +26,7 @@ meta:
 
 Для задания даты и времени используются следующие форматы:
 
-<MySQLOnly>
+**MySQL**
 
 | Тип         | Формат по умолчанию                                                                                                                                                          |
 | :---------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -36,9 +36,7 @@ meta:
 | `TIME`      | `hhh:mm:sss`                                                                                                                                                                 |
 | `YEAR`      | `YYYY` - полный формат <br /> `YY` или `Y` - сокращённый формат, который возвращает год в пределах 2000-2069 для значений 0-69 и год в пределах 1970-1999 для значений 70-99 |
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 | Тип         | Формат по умолчанию   |
 | :---------- | :-------------------- |
@@ -46,16 +44,14 @@ meta:
 | `TIMESTAMP` | `YYYY-MM-DD hh:mm:ss` |
 | `TIME`      | `hh:mm:ss`            |
 
-</PostgreSQLOnly>
-
 Причём, при указании даты допускается использовать любой знак пунктуации в качестве разделительного между частями разделов даты или времени.
 Также возможно задавать дату вообще без разделительного знака, слитно.
 
 Примеры валидного задания временных значений через строковое представление:
 
-<MySQLOnly>
+**MySQL**
 
-```sql-executable
+```sql
 SELECT  CAST("2022-06-16 16:37:23" AS DATETIME) AS datetime_1,
         CAST("2014/02/22 16*37*22" AS DATETIME) AS datetime_2,
         CAST("20220616163723" AS DATETIME) AS datetime_3,
@@ -64,11 +60,13 @@ SELECT  CAST("2022-06-16 16:37:23" AS DATETIME) AS datetime_1,
         CAST("89" AS YEAR) AS year
 ```
 
-</MySQLOnly>
+| datetime_1               | datetime_2               | datetime_3               | date_1                   | time_1    | year |
+| ------------------------ | ------------------------ | ------------------------ | ------------------------ | --------- | ---- |
+| 2022-06-16T16:37:23.000Z | 2014-02-22T16:37:22.000Z | 2022-06-16T16:37:23.000Z | 2021-02-12T00:00:00.000Z | 160:23:13 | 1989 |
 
-<PostgreSQLOnly>
+**PostgreSQL**
 
-```sql-executable
+```sql
 SELECT  CAST('2022-06-16 16:37:23' AS TIMESTAMP) AS timestamp_1,
         CAST('2014/02/22 16:37:22' AS TIMESTAMP) AS timestamp_2,
         CAST('20220616163723' AS TIMESTAMP) AS timestamp_3,
@@ -76,122 +74,116 @@ SELECT  CAST('2022-06-16 16:37:23' AS TIMESTAMP) AS timestamp_1,
         CAST('16:23:13' AS TIME) AS time_1
 ```
 
-</PostgreSQLOnly>
+| timestamp_1              | timestamp_2              | timestamp_3              | date_1                   | time_1   |
+| ------------------------ | ------------------------ | ------------------------ | ------------------------ | -------- |
+| 2022-06-16T16:37:23.000Z | 2014-02-22T16:37:22.000Z | 2022-06-16T16:37:23.000Z | 2021-02-12T00:00:00.000Z | 16:23:13 |
 
 В запросе выше для принудительного преобразования строки в дату и время была использована функция `CAST`.
 Она необходима, если сервер не ожидает временного значения и, соответственно, автоматически не преобразует строку
-к нужному типу. С преобразованием типов мы более подробно познакомимся в статье <a href="/guide/type-conversion-functions" target="_blank">«Функции преобразования типов, CAST»</a>.
+к нужному типу. С преобразованием типов мы более подробно познакомимся в статье <a href="https://sql-academy.org/ru/guide/type-conversion-functions" target="_blank">«Функции преобразования типов, CAST»</a>.
 
 ### Функции генерации дат
 
 Если необходимо получить временные данные из строки, которая не соответствует ни одному формату, который принимает
 функция `CAST`, то можно использовать специальные функции для парсинга дат.
 
-<MySQLOnly>
+**MySQL**
 
 В MySQL есть встроенная функция `STR_TO_DATE`, которая принимает произвольную строку, содержащую дату, и формат, описывающий её.
 
-```sql-executable
+```sql
 SELECT STR_TO_DATE('November 13, 1998', '%M %d, %Y') AS date;
 ```
 
-Более подробное описание функции `STR_TO_DATE` и её аргументов можно посмотреть <a href="/handbook/mysql/str_to_date" target="_blank">в справочнике</a>.
+| date                     |
+| ------------------------ |
+| 1998-11-13T00:00:00.000Z |
 
-</MySQLOnly>
+Более подробное описание функции `STR_TO_DATE` и её аргументов можно посмотреть <a href="https://sql-academy.org/ru/handbook/mysql/str_to_date" target="_blank">в справочнике</a>.
 
-<PostgreSQLOnly>
+**PostgreSQL**
 
 В PostgreSQL есть встроенная функция `TO_DATE`, которая принимает произвольную строку, содержащую дату, и формат, описывающий её.
 
-```sql-executable
+```sql
 SELECT TO_DATE('November 13, 1998', 'Month DD, YYYY') AS date;
 ```
 
-Более подробное описание функции `TO_DATE` и её аргументов можно посмотреть <a href="/handbook/postgresql/to_date" target="_blank">в справочнике</a>.
+| date                     |
+| ------------------------ |
+| 1998-11-13T00:00:00.000Z |
 
-</PostgreSQLOnly>
+Более подробное описание функции `TO_DATE` и её аргументов можно посмотреть <a href="https://sql-academy.org/ru/handbook/postgresql/to_date" target="_blank">в справочнике</a>.
 
 Для генерации же текущей даты или времени нет необходимости создавать строку для последующего её преобразования в дату,
 потому что есть встроенные функции для получения данных значений.
 
-<MySQLOnly>
+**MySQL**
 
 В MySQL это функции `CURDATE`, `CURTIME` и `NOW`.
 
-```sql-executable
+```sql
 SELECT CURDATE(), CURTIME(), NOW();
 ```
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 В PostgreSQL это функции `CURRENT_DATE`, `CURRENT_TIME` и `NOW`.
 
-```sql-executable
+```sql
 SELECT CURRENT_DATE, CURRENT_TIME, NOW();
 ```
-
-</PostgreSQLOnly>
 
 ## Функции извлечения временных данных
 
 Иногда необходимо получить не всю дату, а только её конкретную часть, например,
 месяц или год.
 
-<MySQLOnly>
+**MySQL**
 
 Для этого в SQL есть следующие функции:
 
-| Функция                                                       | Описание                                                   |
-| :------------------------------------------------------------ | :--------------------------------------------------------- |
-| <a href="/handbook/mysql/year" target="_blank">`YEAR`</a>     | Возвращает год для указанной даты                          |
-| <a href="/handbook/mysql/month" target="_blank">`MONTH`</a>   | Возвращает числовое значение месяца года (от 1 до 12) даты |
-| <a href="/handbook/mysql/day" target="_blank">`DAY`</a>       | Возвращает порядковый номер дня в месяце (от 1 до 31)      |
-| <a href="/handbook/mysql/hour" target="_blank">`HOUR`</a>     | Возвращает значение часа (от 0 до 23) для времени          |
-| <a href="/handbook/mysql/minute" target="_blank">`MINUTE`</a> | Возвращает значение минут (от 0 до 59) для времени         |
+| Функция                                                                                 | Описание                                                   |
+| :-------------------------------------------------------------------------------------- | :--------------------------------------------------------- |
+| <a href="https://sql-academy.org/ru/handbook/mysql/year" target="_blank">`YEAR`</a>     | Возвращает год для указанной даты                          |
+| <a href="https://sql-academy.org/ru/handbook/mysql/month" target="_blank">`MONTH`</a>   | Возвращает числовое значение месяца года (от 1 до 12) даты |
+| <a href="https://sql-academy.org/ru/handbook/mysql/day" target="_blank">`DAY`</a>       | Возвращает порядковый номер дня в месяце (от 1 до 31)      |
+| <a href="https://sql-academy.org/ru/handbook/mysql/hour" target="_blank">`HOUR`</a>     | Возвращает значение часа (от 0 до 23) для времени          |
+| <a href="https://sql-academy.org/ru/handbook/mysql/minute" target="_blank">`MINUTE`</a> | Возвращает значение минут (от 0 до 59) для времени         |
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 Для этого в PostgreSQL используется функция `EXTRACT`:
 
-| Функция                                                                                | Описание                                                   |
-| :------------------------------------------------------------------------------------- | :--------------------------------------------------------- |
-| <a href="/handbook/postgresql/extract" target="_blank">`EXTRACT(YEAR FROM date)`</a>   | Возвращает год для указанной даты                          |
-| <a href="/handbook/postgresql/extract" target="_blank">`EXTRACT(MONTH FROM date)`</a>  | Возвращает числовое значение месяца года (от 1 до 12) даты |
-| <a href="/handbook/postgresql/extract" target="_blank">`EXTRACT(DAY FROM date)`</a>    | Возвращает порядковый номер дня в месяце (от 1 до 31)      |
-| <a href="/handbook/postgresql/extract" target="_blank">`EXTRACT(HOUR FROM time)`</a>   | Возвращает значение часа (от 0 до 23) для времени          |
-| <a href="/handbook/postgresql/extract" target="_blank">`EXTRACT(MINUTE FROM time)`</a> | Возвращает значение минут (от 0 до 59) для времени         |
+| Функция                                                                                                          | Описание                                                   |
+| :--------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------- |
+| <a href="https://sql-academy.org/ru/handbook/postgresql/extract" target="_blank">`EXTRACT(YEAR FROM date)`</a>   | Возвращает год для указанной даты                          |
+| <a href="https://sql-academy.org/ru/handbook/postgresql/extract" target="_blank">`EXTRACT(MONTH FROM date)`</a>  | Возвращает числовое значение месяца года (от 1 до 12) даты |
+| <a href="https://sql-academy.org/ru/handbook/postgresql/extract" target="_blank">`EXTRACT(DAY FROM date)`</a>    | Возвращает порядковый номер дня в месяце (от 1 до 31)      |
+| <a href="https://sql-academy.org/ru/handbook/postgresql/extract" target="_blank">`EXTRACT(HOUR FROM time)`</a>   | Возвращает значение часа (от 0 до 23) для времени          |
+| <a href="https://sql-academy.org/ru/handbook/postgresql/extract" target="_blank">`EXTRACT(MINUTE FROM time)`</a> | Возвращает значение минут (от 0 до 59) для времени         |
 
-</PostgreSQLOnly>
+**MySQL**
 
-<MySQLOnly>
+## Отличие DATETIME от TIMESTAMP
 
-## MySQL: отличие DATETIME от TIMESTAMP
-
-В MySQL есть очень похожие друг на друга типы данных: `DATETIME` и `TIMESTAMP`. Они оба направлены на хранение даты и времени, но имеют ряд отличий, определяющих их целевое использование.
+Есть очень похожие друг на друга типы данных: `DATETIME` и `TIMESTAMP`. Они оба направлены на хранение даты и времени, но имеют ряд отличий, определяющих их целевое использование.
 
 | Критерий     | `DATETIME`                                                                       | `TIMESTAMP`                                                                              |
 | :----------- | :------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------- |
 | Диапазон     | от `1000-01-01 00:00:00` <br /> до `9999-12-31 23:59:59`                         | от `1970-01-01 00:00:00` <br /> до `2038-01-19 03:14:07`                                 |
 | Часовой пояс | Не учитывается <br /> Отображается в таком виде, в котором дата была установлена | Учитывается <br /> При выборках отображается с учётом текущего часового пояса сервера БД |
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
+## Отличие TIMESTAMP и TIMESTAMPTZ
 
-## PostgreSQL: отличие TIMESTAMP и TIMESTAMPTZ
-
-В PostgreSQL основными типами для хранения даты и времени являются `TIMESTAMP` (без часового пояса) и `TIMESTAMPTZ` (с часовым поясом).
+Основными типами для хранения даты и времени являются `TIMESTAMP` (без часового пояса) и `TIMESTAMPTZ` (с часовым поясом).
 
 | Критерий     | `TIMESTAMP`                                                                      | `TIMESTAMPTZ`                                                                            |
 | :----------- | :------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------- |
 | Диапазон     | от `4713 BC` до `294276 AD`                                                      | от `4713 BC` до `294276 AD`                                                              |
 | Часовой пояс | Не учитывается <br /> Отображается в таком виде, в котором дата была установлена | Учитывается <br /> При выборках отображается с учётом текущего часового пояса сервера БД |
-
-</PostgreSQLOnly>
 
 ## Часовые пояса
 
@@ -207,7 +199,7 @@ SELECT CURRENT_DATE, CURRENT_TIME, NOW();
 - для текущего пользователя
 - для текущей пользовательской сессии
 
-<MySQLOnly>
+**MySQL**
 
 ```sql
 SET GLOBAL time_zone = '+03:00';    // глобально
@@ -217,9 +209,7 @@ SET @@session.time_zone = '+03:00'; // для текущей пользоват�
 
 Соответственно, при изменении временной зоны все значения с типом `TIMESTAMP` будут выводиться с учётом текущей активной временной зоны.
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 ```sql
 ALTER DATABASE mydb SET timezone = 'Europe/Moscow';  // глобально для базы данных
@@ -229,8 +219,6 @@ SET TIME ZONE '+03:00';                              // для текущей с
 ```
 
 Соответственно, при изменении временной зоны все значения с типом `TIMESTAMPTZ` будут выводиться с учётом текущей активной временной зоны.
-
-</PostgreSQLOnly>
 
 ## Примеры задач на дату и время
 
@@ -242,21 +230,17 @@ SET TIME ZONE '+03:00';                              // для текущей с
 При постановке задачи найти возраст человека по дате его рождения часто возникает соблазн 😈 вычислить
 разницу текущего года и года рождения человека:
 
-<MySQLOnly>
+**MySQL**
 
-```sql-executable
+```sql
 SELECT YEAR(NOW()) - YEAR('2003-07-03 14:10:26');
 ```
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
-
-```sql-executable
+```sql
 SELECT EXTRACT(YEAR FROM NOW()) - EXTRACT(YEAR FROM TIMESTAMP '2003-07-03 14:10:26');
 ```
-
-</PostgreSQLOnly>
 
 Проблема такого подхода в том, что он не учитывает, был ли день рождения у данного человека в этом году или ещё нет.
 То есть, если на момент запроса уже наступило 3-е июля (07-03), то человек отпраздновал свой день рождения и ему уже 20 лет,
@@ -266,21 +250,17 @@ SELECT EXTRACT(YEAR FROM NOW()) - EXTRACT(YEAR FROM TIMESTAMP '2003-07-03 14:10:
 Если определить возраст через разницу годов — неработающий вариант, то может возникнуть желание найти возраст через
 разницу дней между двумя датами, затем поделить эту разницу на количество дней в году и округлить вниз:
 
-<MySQLOnly>
+**MySQL**
 
-```sql-executable
+```sql
 SELECT FLOOR(DATEDIFF(NOW(), '2003-07-03 14:10:26') / 365);
 ```
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
-
-```sql-executable
+```sql
 SELECT FLOOR(EXTRACT(DAY FROM NOW() - TIMESTAMP '2003-07-03 14:10:26') / 365);
 ```
-
-</PostgreSQLOnly>
 
 И это решение будет гораздо точнее предыдущего. Но оно не будет абсолютно точным из-за наличия високосных годов, когда в году 366 дней.
 Хотя погрешность в вычислении возраста для 1 человека из-за наличия високосного года достаточно низкая, в вычислениях на определение, скажем,
@@ -288,24 +268,20 @@ SELECT FLOOR(EXTRACT(DAY FROM NOW() - TIMESTAMP '2003-07-03 14:10:26') / 365);
 
 И как же тогда корректно определять возраст?
 
-<MySQLOnly>
+**MySQL**
 
-Для этого есть готовая встроенная функция — <a href="/handbook/mysql/timestampdiff" target="_blank">`TIMESTAMPDIFF`</a>,
+Для этого есть готовая встроенная функция — <a href="https://sql-academy.org/ru/handbook/mysql/timestampdiff" target="_blank">`TIMESTAMPDIFF`</a>,
 которая первым аргументом принимает единицу измерения, в которой нужно вернуть разницу между двумя временными значениями.
 
-```sql-executable
+```sql
 SELECT TIMESTAMPDIFF(YEAR, '2003-07-03 14:10:26', NOW());
 ```
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
-
-Для этого используется функция <a href="/handbook/postgresql/extract" target="_blank">`EXTRACT`</a> совместно с функцией <a href="/handbook/postgresql/age" target="_blank">`AGE`</a>,
+Для этого используется функция <a href="https://sql-academy.org/ru/handbook/postgresql/extract" target="_blank">`EXTRACT`</a> совместно с функцией <a href="https://sql-academy.org/ru/handbook/postgresql/age" target="_blank">`AGE`</a>,
 которая вычисляет точный интервал между двумя датами.
 
-```sql-executable
+```sql
 SELECT EXTRACT(YEAR FROM AGE(NOW(), TIMESTAMP '2003-07-03 14:10:26'));
 ```
-
-</PostgreSQLOnly>
