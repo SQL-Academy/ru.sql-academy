@@ -1,7 +1,7 @@
 ---
 meta:
-    title: 'Обновление данных, оператор UPDATE'
-    description: 'Редактирование (обновление) записей в sql. Изменение данных в реляционных базах данных.'
+    title: "UPDATE в SQL: как изменить данные в таблице — примеры"
+    description: "Как обновить данные в таблице SQL оператором UPDATE: синтаксис SET и WHERE, обновление нескольких столбцов одним запросом, типичные ошибки. Примеры с упражнениями."
 ---
 
 # Обновление данных, оператор UPDATE
@@ -19,24 +19,24 @@ SET поле_таблицы1 = значение_поля_таблицы1,
 
 Так, например, если нужно изменить имя, то запрос будет иметь следующий вид:
 
-<ERD databaseName="Family" />
+ER-диаграмма базы данных Family: [открыть на SQL Academy](https://sql-academy.org/ru/guide/operator-update).
 
 ```sql
 UPDATE FamilyMembers
-SET member_name = "Andie Anthony"
-WHERE member_name = "Andie Quincey";
+SET member_name = 'Andie Anthony'
+WHERE member_name = 'Andie Quincey';
 ```
 
-| member_id | status      | member_name       | birthday             |
-| --------- | ----------- | ----------------- | -------------------- |
-| 1         | father      | Headley Quincey   | 1960-05-13T00:00:00Z |
-| 2         | mother      | Flavia Quincey    | 1963-02-16T00:00:00Z |
-| 3         | varchar(50) | Andie Anthony     | 1983-06-05T00:00:00Z |
-| 4         | daughter    | Lela Quincey      | 1985-06-07T00:00:00Z |
-| 5         | daughter    | Annie Quincey     | 1988-04-10T00:00:00Z |
-| 6         | father      | Ernest Forrest    | 1961-09-11T00:00:00Z |
-| 7         | mother      | Constance Forrest | 1968-09-06T00:00:00Z |
-| 8         | daughter    | Wednesday Addams  | 2005-01-13T00:00:00Z |
+| member_id | status      | member_name       | birthday                 |
+| --------- | ----------- | ----------------- | ------------------------ |
+| 1         | father      | Headley Quincey   | 1960-05-13T00:00:00.000Z |
+| 2         | mother      | Flavia Quincey    | 1963-02-16T00:00:00.000Z |
+| 3         | varchar(50) | Andie Anthony     | 1983-06-05T00:00:00.000Z |
+| 4         | daughter    | Lela Quincey      | 1985-06-07T00:00:00.000Z |
+| 5         | daughter    | Annie Quincey     | 1988-04-10T00:00:00.000Z |
+| 6         | father      | Ernest Forrest    | 1961-09-11T00:00:00.000Z |
+| 7         | mother      | Constance Forrest | 1968-09-06T00:00:00.000Z |
+| 8         | daughter    | Wednesday Addams  | 2005-01-13T00:00:00.000Z |
 
 > Будьте внимательны, когда обновляете данные. Если вы пропустите оператор `WHERE`, то будут обновлены все записи в таблице.
 

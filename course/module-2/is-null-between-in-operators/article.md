@@ -1,16 +1,16 @@
 ---
 meta:
-    title: 'Операторы IS NULL, BETWEEN, IN'
-    description: 'Синтаксис и примеры использования SQL операторов IS NULL, BETWEEN, IN'
+    title: "Операторы IS NULL, BETWEEN, IN"
+    description: "Синтаксис и примеры использования SQL операторов IS NULL, BETWEEN, IN"
 ---
 
 # Операторы IS NULL, BETWEEN, IN
 
 Мы уже познакомились с синтаксисом оператора `WHERE` и операторами сравнения, но помимо них в условных запросах мы можем использовать следующие полезные операторы:
 
--   `IS NULL`
--   `BETWEEN`
--   `IN`
+- `IS NULL`
+- `BETWEEN`
+- `IN`
 
 Давайте рассмотрим их применение.
 
@@ -27,8 +27,8 @@ WHERE middle_name IS NULL;
 
 | id  | first_name | middle_name | last_name |
 | --- | ---------- | ----------- | --------- |
-| 10  | YUrij      | null        | Krylov    |
-| 11  | Andrej     | null        | Evseev    |
+| 10  | YUrij      |             | Krylov    |
+| 11  | Andrej     |             | Evseev    |
 
 Для использования отрицания, то есть, если мы хотим найти все записи, где поле не равно `NULL`, мы должны использовать следующий синтаксис:
 
