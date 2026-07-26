@@ -24,23 +24,21 @@ meta:
 -- Начало транзакции
 START TRANSACTION;
 
--- Проверка наличия достаточного баланса у отправителя
-SELECT @balance := user_balance FROM accounts WHERE user_id = 1;
+-- Проверка баланса с использованием условия в WHERE
+-- Списываем деньги, только если баланс достаточный
+UPDATE accounts
+SET user_balance = user_balance - 1000
+WHERE user_id = 1
+  AND user_balance >= 1000;
 
--- Если средств недостаточно, отмена транзакции
-IF @balance < 1000 THEN
-ROLLBACK;
-END IF;
+-- Проверяем, что операция прошла успешно
+-- В реальном приложении проверяется количество обновленных строк
+-- Если 0 строк обновлено - недостаточно средств, нужен ROLLBACK
 
--- Проверка на существование получателя
-SELECT @exists := COUNT(*) FROM accounts WHERE user_id = 2;
-IF @exists = 0 THEN
-ROLLBACK;
-END IF;
-
--- Обновление баланса счетов, если все проверки пройдены
-UPDATE accounts SET user_balance = user_balance - 1000 WHERE user_id = 1;
-UPDATE accounts SET user_balance = user_balance + 1000 WHERE user_id = 2;
+-- Зачисляем деньги получателю (если он существует)
+UPDATE accounts
+SET user_balance = user_balance + 1000
+WHERE user_id = 2;
 
 -- Применение изменений
 COMMIT;
