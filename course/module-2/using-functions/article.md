@@ -1,7 +1,7 @@
 ---
 meta:
-    title: 'Применение функций'
-    description: 'Примеры скалярных SQL функций и примеры их применений над литералами и над значениями полей из таблиц'
+    title: "Применение функций"
+    description: "Примеры скалярных SQL функций и примеры их применений над литералами и над значениями полей из таблиц"
 ---
 
 # Применение функций
@@ -9,9 +9,13 @@ meta:
 При составлении SQL запросов мы можем использовать встроенные функции.
 Например, если мы хотим вывести строку в верхнем регистре, то для этого мы можем использовать функцию `UPPER`.
 
-```sql-executable
+```sql
 SELECT UPPER('Hello world') AS upper_string;
 ```
+
+| upper_string |
+| ------------ |
+| HELLO WORLD  |
 
 ## Что такое встроенная функция?
 
@@ -23,97 +27,131 @@ SELECT UPPER('Hello world') AS upper_string;
 
 ## Примеры функций
 
-Функций достаточно много, но основные всегда можно найти с помощью поиска в шапке или же на <a href="/handbook" target="_blank">странице справочника функций</a>.
+Функций достаточно много, но основные всегда можно найти с помощью поиска в шапке или же на <a href="https://sql-academy.org/ru/handbook" target="_blank">странице справочника функций</a>.
 
 Вот некоторые из них:
 
-<MySQLOnly>
+**MySQL**
 
--   <a href="/handbook/mysql/lower" target="_blank">
-        **LOWER**
-    </a>
+- <a href="https://sql-academy.org/ru/handbook/mysql/lower" target="_blank">
+    **LOWER**
+  </a>
+
     Возвращает строку, в которой все символы записаны в нижнем регистре
 
-    ```sql-executable
+    ```sql
     SELECT LOWER('SQL Academy') AS lower_string;
     ```
 
--   <a href="/handbook/mysql/year" target="_blank">
-        **YEAR**
-    </a>
+    | lower_string |
+    | ------------ |
+    | sql academy  |
+
+- <a href="https://sql-academy.org/ru/handbook/mysql/year" target="_blank">
+    **YEAR**
+  </a>
+
     Возвращает год для указанной даты
 
-    ```sql-executable
+    ```sql
     SELECT YEAR('2022-06-16') AS year;
     ```
 
--   <a href="/handbook/mysql/instr" target="_blank">
-        **INSTR**
-    </a>
-    Осуществляет поиск подстроки в строке, возвращая позицию её первого символа. При этом отсчёт
-    начинается с единицы, а не нуля, как в большинстве языков программирования.
+    | year |
+    | ---- |
+    | 2022 |
+
+- <a href="https://sql-academy.org/ru/handbook/mysql/instr" target="_blank">
+    **INSTR**
+  </a>
+
+    Осуществляет поиск подстроки в строке, возвращая позицию её первого символа. При этом
+    отсчёт начинается с единицы, а не нуля, как в большинстве языков программирования.
 
     Функция работает путём посимвольного сравнения исходной строки с искомой. Например, в строке `sql-academy` подстрока `academy` появляется, начиная с пятого символа.
 
-    ```sql-executable
+    ```sql
     SELECT INSTR('sql-academy', 'academy') AS idx;
     ```
 
--   <a href="/handbook/mysql/length" target="_blank">
-        **LENGTH**
-    </a>
+    | idx |
+    | --- |
+    | 5   |
+
+- <a href="https://sql-academy.org/ru/handbook/mysql/length" target="_blank">
+    **LENGTH**
+  </a>
 
     Возвращает длину указанной строки.
 
-    ```sql-executable
+    ```sql
     SELECT LENGTH('sql-academy') AS str_length;
     ```
 
-</MySQLOnly>
+    | str_length |
+    | ---------- |
+    | 11         |
 
-<PostgreSQLOnly>
+**PostgreSQL**
 
--   <a href="/handbook/postgresql/lower" target="_blank">
-        **LOWER**
-    </a>
+- <a href="https://sql-academy.org/ru/handbook/postgresql/lower" target="_blank">
+    **LOWER**
+  </a>
+
     Возвращает строку, в которой все символы записаны в нижнем регистре
 
-    ```sql-executable
+    ```sql
     SELECT LOWER('SQL Academy') AS lower_string;
     ```
 
--   <a href="/handbook/postgresql/extract" target="_blank">
-        **EXTRACT**
-    </a>
+    | lower_string |
+    | ------------ |
+    | sql academy  |
+
+- <a href="https://sql-academy.org/ru/handbook/postgresql/extract" target="_blank">
+    **EXTRACT**
+  </a>
+
     Извлекает часть даты (год, месяц, день и т.д.) для указанной даты
 
-    ```sql-executable
+    ```sql
     SELECT EXTRACT(YEAR FROM DATE '2022-06-16') AS year;
     ```
 
--   <a href="/handbook/postgresql/position" target="_blank">
-        **POSITION**
-    </a>
-    Осуществляет поиск подстроки в строке, возвращая позицию её первого символа. При этом отсчёт
-    начинается с единицы, а не нуля, как в большинстве языков программирования.
+    | year |
+    | ---- |
+    | 2022 |
+
+- <a href="https://sql-academy.org/ru/handbook/postgresql/position" target="_blank">
+    **POSITION**
+  </a>
+
+    Осуществляет поиск подстроки в строке, возвращая позицию её первого символа. При этом
+    отсчёт начинается с единицы, а не нуля, как в большинстве языков программирования.
 
     Функция работает путём посимвольного сравнения исходной строки с искомой. Например, в строке `sql-academy` подстрока `academy` появляется, начиная с пятого символа.
 
-    ```sql-executable
+    ```sql
     SELECT POSITION('academy' IN 'sql-academy') AS idx;
     ```
 
--   <a href="/handbook/postgresql/length" target="_blank">
-        **LENGTH**
-    </a>
+    | idx |
+    | --- |
+    | 5   |
+
+- <a href="https://sql-academy.org/ru/handbook/postgresql/length" target="_blank">
+    **LENGTH**
+  </a>
 
     Возвращает длину указанной строки.
 
-    ```sql-executable
+    ```sql
     SELECT LENGTH('sql-academy') AS str_length;
     ```
 
-</PostgreSQLOnly>
+    | str_length |
+    | ---------- |
+    | 11         |
 
 ## Применение функций над значениями полей таблицы
 
@@ -121,13 +159,24 @@ SELECT UPPER('Hello world') AS upper_string;
 
 Например, давайте вернёмся к нашей базе данных и рассмотрим таблицу `FamilyMembers`: она содержит имя, статус и дату рождения людей.
 
-<ERD databaseName="Family" />
+ER-диаграмма базы данных Family: [открыть на SQL Academy](https://sql-academy.org/ru/guide/using-functions).
 
 Каждое значение этих полей мы можем изменить при выводе. Так, нижележащий запрос высчитывает длину полного имени для каждого из членов семьи.
 
-```sql-executable-Family-format
+```sql
 SELECT member_name, LENGTH(member_name) AS fullname_length FROM FamilyMembers;
 ```
+
+| member_name       | fullname_length |
+| ----------------- | --------------- |
+| Headley Quincey   | 15              |
+| Flavia Quincey    | 14              |
+| Andie Quincey     | 13              |
+| Lela Quincey      | 12              |
+| Annie Quincey     | 13              |
+| Ernest Forrest    | 14              |
+| Constance Forrest | 17              |
+| Wednesday Addams  | 16              |
 
 ## Операции над результатом функции
 
@@ -135,21 +184,25 @@ SELECT member_name, LENGTH(member_name) AS fullname_length FROM FamilyMembers;
 
 К примеру, мы хотим получить первые три буквы в строке и преобразовать их в заглавные. Для этого нам будет достаточно скомбинировать две функции: `LEFT` и `UPPER`, где результат одной функции будет аргументом для второй.
 
-```sql-executable-format
+```sql
 SELECT UPPER(LEFT('sql-academy', 3)) AS str;
 ```
 
+| str |
+| --- |
+| SQL |
+
 Или хотим вычислить длину фамилии человека, имея строку в формате `имя<пробел>фамилия`. Одним из возможных способов вычисления длины фамилии может быть применение функций `LENGTH` и поиска позиции пробела, используя формулу `<длина фамилии> = <длина всей строки> - (<длина имени> + <длина пробела>)`:
 
--   Значение `<длина всей строки>` можно получить с помощью функции `LENGTH`
+- Значение `<длина всей строки>` можно получить с помощью функции `LENGTH`
 
-<MySQLOnly>
+**MySQL**
 
--   Для `<длина имени> + <длина пробела>` нужно вычислить позицию символа, где заканчивается имя, и прибавить единицу, т.к. пробел имеет длину «1». Мы можем сделать это, используя лишь функцию `INSTR`, ориентируясь на символ «пробел»
+- Для `<длина имени> + <длина пробела>` нужно вычислить позицию символа, где заканчивается имя, и прибавить единицу, т.к. пробел имеет длину «1». Мы можем сделать это, используя лишь функцию `INSTR`, ориентируясь на символ «пробел»
 
 Так как обе функции возвращают числовые литералы, мы можем выполнять арифметические операции над ними. Давайте вычтем одно из другого и получим длину фамилии (lastname_length):
 
-```sql-executable-Family-format
+```sql
 SELECT
     member_name,
     LENGTH(member_name) AS full_length,
@@ -158,15 +211,13 @@ SELECT
 FROM FamilyMembers;
 ```
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
-
--   Для `<длина имени> + <длина пробела>` нужно вычислить позицию символа, где заканчивается имя, и прибавить единицу, т.к. пробел имеет длину «1». Мы можем сделать это, используя лишь функцию `POSITION`, ориентируясь на символ «пробел»
+- Для `<длина имени> + <длина пробела>` нужно вычислить позицию символа, где заканчивается имя, и прибавить единицу, т.к. пробел имеет длину «1». Мы можем сделать это, используя лишь функцию `POSITION`, ориентируясь на символ «пробел»
 
 Так как обе функции возвращают числовые литералы, мы можем выполнять арифметические операции над ними. Давайте вычтем одно из другого и получим длину фамилии (lastname_length):
 
-```sql-executable-Family-format
+```sql
 SELECT
     member_name,
     LENGTH(member_name) AS full_length,
@@ -175,4 +226,13 @@ SELECT
 FROM FamilyMembers;
 ```
 
-</PostgreSQLOnly>
+| member_name       | full_length | firstname_with_space_length | lastname_length |
+| ----------------- | ----------- | --------------------------- | --------------- |
+| Headley Quincey   | 15          | 8                           | 7               |
+| Flavia Quincey    | 14          | 7                           | 7               |
+| Andie Quincey     | 13          | 6                           | 7               |
+| Lela Quincey      | 12          | 5                           | 7               |
+| Annie Quincey     | 13          | 6                           | 7               |
+| Ernest Forrest    | 14          | 7                           | 7               |
+| Constance Forrest | 17          | 10                          | 7               |
+| Wednesday Addams  | 16          | 10                          | 6               |

@@ -1,7 +1,7 @@
 ---
 meta:
-  title: "Обобщённое табличное выражение, оператор WITH"
-  description: "Обобщённое табличное выражение (Common Table Expression) в SQL. Синтаксис оператора WITH и примеры его использования."
+    title: "Обобщённое табличное выражение, оператор WITH"
+    description: "Обобщённое табличное выражение (Common Table Expression) в SQL. Синтаксис оператора WITH и примеры его использования."
 ---
 
 # Обобщённое табличное выражение, оператор WITH
@@ -9,7 +9,7 @@ meta:
 Обобщённое табличное выражение или CTE (Common Table Expressions) - это временный результирующий набор данных, к которому можно обращаться в последующих запросах.
 Для написания обобщённого табличного выражения используется оператор `WITH`.
 
-```sql-Trip-executable
+```sql
 -- Пример использования конструкции WITH
 WITH Aeroflot_trips AS
     (SELECT TRIP.* FROM Company
@@ -40,11 +40,11 @@ WITH название_cte [(столбец_1 [, столбец_2 ] …)] AS (п�
 
 ## Примеры запросов
 
-<ERD databaseName="Airo" />
+ER-диаграмма базы данных Airo: [открыть на SQL Academy](https://sql-academy.org/ru/guide/operator-with).
 
 1. Создаём табличное выражение `Aeroflot_trips`, содержащее все полёты, совершенные авиакомпанией «Aeroflot»
 
-```sql-Trip-executable
+```sql
 WITH Aeroflot_trips AS
     (SELECT plane, town_from, town_to FROM Company
         INNER JOIN Trip ON Trip.company = Company.id WHERE name = 'Aeroflot')
@@ -52,9 +52,14 @@ WITH Aeroflot_trips AS
 SELECT * FROM Aeroflot_trips;
 ```
 
+| plane | town_from | town_to |
+| ----- | --------- | ------- |
+| IL-86 | Moscow    | Rostov  |
+| IL-86 | Rostov    | Moscow  |
+
 2. Аналогично, создаём табличное выражение `Aeroflot_trips`, но с переименованными колонками
 
-```sql-Trip-executable
+```sql
 WITH Aeroflot_trips (aeroflot_plane, town_from, town_to) AS
     (SELECT plane, town_from, town_to FROM Company
         INNER JOIN Trip ON Trip.company = Company.id WHERE name = 'Aeroflot')
@@ -62,9 +67,14 @@ WITH Aeroflot_trips (aeroflot_plane, town_from, town_to) AS
 SELECT * FROM Aeroflot_trips;
 ```
 
+| aeroflot_plane | town_from | town_to |
+| -------------- | --------- | ------- |
+| IL-86          | Moscow    | Rostov  |
+| IL-86          | Rostov    | Moscow  |
+
 3. С помощью оператора `WITH` определяем несколько табличных выражений
 
-```sql-Trip-executable
+```sql
 WITH Aeroflot_trips AS
     (SELECT TRIP.* FROM Company
         INNER JOIN Trip ON Trip.company = Company.id WHERE name = 'Aeroflot'),
@@ -74,6 +84,17 @@ WITH Aeroflot_trips AS
 
 SELECT * FROM Don_avia_trips UNION SELECT * FROM  Aeroflot_trips;
 ```
+
+| id   | company | plane  | town_from | town_to | time_out                 | time_in                  |
+| ---- | ------- | ------ | --------- | ------- | ------------------------ | ------------------------ |
+| 1181 | 1       | TU-134 | Rostov    | Moscow  | 1900-01-01T06:12:00.000Z | 1900-01-01T08:01:00.000Z |
+| 1182 | 1       | TU-134 | Moscow    | Rostov  | 1900-01-01T12:35:00.000Z | 1900-01-01T14:30:00.000Z |
+| 1187 | 1       | TU-134 | Rostov    | Moscow  | 1900-01-01T15:42:00.000Z | 1900-01-01T17:39:00.000Z |
+| 1188 | 1       | TU-134 | Moscow    | Rostov  | 1900-01-01T22:50:00.000Z | 1900-01-02T00:48:00.000Z |
+| 1195 | 1       | TU-154 | Rostov    | Moscow  | 1900-01-01T23:30:00.000Z | 1900-01-02T01:11:00.000Z |
+| 1196 | 1       | TU-154 | Moscow    | Rostov  | 1900-01-01T04:00:00.000Z | 1900-01-01T05:45:00.000Z |
+| 1145 | 2       | IL-86  | Moscow    | Rostov  | 1900-01-01T09:35:00.000Z | 1900-01-01T11:23:00.000Z |
+| 1146 | 2       | IL-86  | Rostov    | Moscow  | 1900-01-01T17:55:00.000Z | 1900-01-01T20:01:00.000Z |
 
 ## Работа с рекурсией в CTE
 
@@ -111,68 +132,14 @@ SELECT * FROM название_cte;
 
 Рассмотрим таблицу `Employees`, которая содержит идентификаторы сотрудников и их руководителей:
 
-Требуется найти всех подчинённых `John Smith` (`id=1`) на всех уровнях иерархии.
-
-```sql
-WITH RECURSIVE Subordinates AS (
-    -- Начальный набор данных
-    SELECT id, name, managerId
-    FROM Employees
-    WHERE managerId = 1
-
-    UNION ALL
-
-    -- Рекурсивная часть: подчинённые подчинённых
-    SELECT e.id, e.name, e.managerId
-    FROM Employees e
-    INNER JOIN Subordinates s ON e.managerId = s.id
-)
-
-SELECT * FROM Subordinates;
-```
-
-### Шаги выполнения рекурсивного CTE
-
-1. **Начальный набор данных:** выбираются все сотрудники, у которых `managerId=1` (непосредственные подчинённые `John Smith`).
-2. **Рекурсивная часть:** для каждого сотрудника, выбранного в начальном наборе данных, выбираются их подчинённые (где `managerId` равен `id` выбранного сотрудника).
-3. **Объединение:** результаты начального набора данных и рекурсивной частей объединяются с помощью `UNION ALL`.
-4. **Рекурсия:** процесс повторяется для каждого нового набора подчинённых, пока не будут выбраны все уровни иерархии.
-
-## Работа с рекурсией в CTE
-
-CTE также могут быть использованы для выполнения рекурсивных запросов,
-которые позволяют итеративно обрабатывать данные, например,
-для работы с иерархическими структурами данных, такими как «руководитель — подчинённый».
-
-### Синтаксис рекурсивного CTE
-
-Рекурсивное CTE состоит из двух частей, разделенных оператором `UNION ALL`:
-
--   Начальный набор данных, который не содержит рекурсивных ссылок.
--   Рекурсивная часть: запрос, который ссылается на CTE, чтобы продолжить рекурсию.
-
-```sql
-WITH RECURSIVE название_cte (столбец_1, столбец_2, ...) AS (
-    -- Начальный набор данных
-    SELECT столбец_1, столбец_2, ...
-    FROM таблица
-    WHERE условие
-
-    UNION ALL
-
-    -- Рекурсивная часть
-    SELECT столбец_1, столбец_2, ...
-    FROM название_cte
-    INNER JOIN таблица ON название_cte.столбец = таблица.столбец
-    WHERE условие
-)
-
-SELECT * FROM название_cte;
-```
-
-### Пример: иерархия руководителей и подчинённых
-
-Рассмотрим таблицу `Employees`, которая содержит идентификаторы сотрудников и их руководителей:
+| id  | name            | managerId |
+| --- | --------------- | --------- |
+| 1   | John Smith      | null      |
+| 2   | Michael Johnson | 1         |
+| 3   | Robert Williams | 1         |
+| 4   | James Brown     | 2         |
+| 5   | David Jones     | 2         |
+| 6   | Richard Davis   | 3         |
 
 Требуется найти всех подчинённых `John Smith` (`id=1`) на всех уровнях иерархии.
 
@@ -193,6 +160,15 @@ WITH RECURSIVE Subordinates AS (
 
 SELECT * FROM Subordinates;
 ```
+
+| id  | name            | managerId |
+| --- | --------------- | --------- |
+| 2   | Michael Johnson | 1         |
+| 3   | Robert Williams | 1         |
+| 4   | James Brown     | 2         |
+| 5   | David Jones     | 2         |
+| 6   | Richard Davis   | 3         |
+
 ### Шаги выполнения рекурсивного CTE
 
 1. **Начальный набор данных:** выбираются все сотрудники, у которых `managerId=1` (непосредственные подчинённые `John Smith`).

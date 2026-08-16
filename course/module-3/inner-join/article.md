@@ -1,7 +1,7 @@
 ---
 meta:
-    title: 'Внутреннее соединение INNER JOIN'
-    description: 'Описание и синтаксис внутреннего соединения INNER JOIN'
+    title: "Внутреннее соединение INNER JOIN"
+    description: "Описание и синтаксис внутреннего соединения INNER JOIN"
 ---
 
 # Внутреннее соединение INNER JOIN
@@ -30,7 +30,7 @@ FROM таблица_1
 
 Например, запрос может выглядеть следующим образом:
 
-<ERD databaseName="Family" />
+ER-диаграмма базы данных Family: [открыть на SQL Academy](https://sql-academy.org/ru/guide/inner-join).
 
 ```sql
 SELECT family_member, member_name FROM Payments
@@ -64,7 +64,7 @@ INNER JOIN FamilyMembers
 
 Для наглядности это выглядит следующим образом:
 
-![Схема внутреннего соединения](https://sql-academy.org/static/guidePage/inner-join/inner-join-example.png 'Схема внутреннего соединения')
+![Схема внутреннего соединения](https://sql-academy.org/static/guidePage/inner-join/inner-join-example.png "Схема внутреннего соединения")
 
 Так как в нашем условии указано равенство полей `Payments.good_id` и `Goods.good_id`, то при внутреннем соединении в итоговой выборке окажутся только записи,
 где в обеих таблицах есть одинаковое значение `good_id`.

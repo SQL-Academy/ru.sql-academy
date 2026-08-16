@@ -1,7 +1,7 @@
 ---
 meta:
-    title: 'Исключение дубликатов, оператор DISTINCT'
-    description: 'Примеры для чего необходим SQL оператор DISTINCT, исключение повторений в SQL для одной и нескольких колонок.'
+    title: "Исключение дубликатов, оператор DISTINCT"
+    description: "Примеры для чего необходим SQL оператор DISTINCT, исключение повторений в SQL для одной и нескольких колонок."
 ---
 
 # Исключение дубликатов, DISTINCT
@@ -10,7 +10,7 @@ meta:
 
 Например, давайте выведем поле `class` из таблицы `Student_in_class` из базы данных, в которой организовано хранение информации о расписании занятий в школе.
 
-<ERD databaseName="Schedule" />
+ER-диаграмма базы данных Schedule: [открыть на SQL Academy](https://sql-academy.org/ru/guide/distinct-operator).
 
 ```sql
 SELECT class FROM Student_in_class;
@@ -30,6 +30,7 @@ SELECT class FROM Student_in_class;
 | 9     |
 | 9     |
 | 9     |
+| 9     |
 | 8     |
 | 8     |
 | 8     |
@@ -41,6 +42,7 @@ SELECT class FROM Student_in_class;
 | 8     |
 | 8     |
 | 8     |
+| 6     |
 | 6     |
 | 6     |
 | 6     |
@@ -104,7 +106,7 @@ SELECT [DISTINCT] поля_таблиц FROM наименование_табли
 
 То есть в нашем случае запрос на получение уникальных классов, в которых есть хотя бы один студент, будет выглядеть следующим образом:
 
-```
+```sql
 SELECT DISTINCT class FROM Student_in_class;
 ```
 

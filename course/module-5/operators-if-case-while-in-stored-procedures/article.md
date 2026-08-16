@@ -1,10 +1,16 @@
 ---
 meta:
-    title: 'Операторы IF, CASE, WHILE в хранимых процедурах и функциях'
-    description: 'Изучите операторы ветвления и циклы в хранимых процедурах и функциях SQL. Синтаксис и примеры IF, CASE, WHILE для MySQL и PostgreSQL.'
+    title: "Операторы IF, CASE, WHILE в хранимых процедурах и функциях"
+    description: "Изучите операторы ветвления и циклы в хранимых процедурах и функциях SQL. Синтаксис и примеры IF, CASE, WHILE для MySQL и PostgreSQL."
 ---
 
-# Операторы IF, CASE, WHILE в хранимых процедурах и функциях
+**MySQL**
+
+# Операторы IF, CASE, WHILE в хранимых процедурах
+
+**PostgreSQL**
+
+# Операторы IF, CASE, WHILE в хранимых функциях
 
 Хранимые процедуры и функции — это не просто удобные контейнеры для группы запросов. Они позволяют реализовать достаточно сложную логику, используя операторы ветвления и циклы.
 
@@ -16,7 +22,7 @@ meta:
 
 ### Синтаксис IF
 
-<MySQLOnly>
+**MySQL**
 
 ```sql
 IF условие THEN
@@ -28,9 +34,7 @@ ELSE
 END IF;
 ```
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 ```sql
 IF условие THEN
@@ -42,15 +46,13 @@ ELSE
 END IF;
 ```
 
-</PostgreSQLOnly>
-
 ### Пример использования IF
 
-<MySQLOnly>
+**MySQL**
 
 Создадим процедуру, которая определяет категорию студента по возрасту:
 
-```sql-executable-Schedule
+```sql
 CREATE PROCEDURE categorize_student_by_age(
     IN student_id INT,
     OUT category VARCHAR(20)
@@ -79,13 +81,11 @@ CALL categorize_student_by_age(1, @category);
 SELECT @category AS age_category;
 ```
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 Создадим функцию, которая определяет категорию студента по возрасту:
 
-```sql-executable-Schedule
+```sql
 CREATE OR REPLACE FUNCTION categorize_student_by_age(student_id INT)
 RETURNS VARCHAR(20)
 LANGUAGE plpgsql
@@ -117,7 +117,11 @@ $$;
 SELECT categorize_student_by_age(1) AS age_category;
 ```
 
-</PostgreSQLOnly>
+**MySQL**
+
+| age_category |
+| ------------ |
+| Молодой      |
 
 ## Оператор выбора CASE
 
@@ -125,7 +129,7 @@ SELECT categorize_student_by_age(1) AS age_category;
 
 ### Синтаксис CASE
 
-<MySQLOnly>
+**MySQL**
 
 ```sql
 CASE
@@ -135,9 +139,7 @@ CASE
 END CASE;
 ```
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 ```sql
 CASE
@@ -146,16 +148,14 @@ CASE
     ELSE результат_по_умолчанию
 END CASE;
 ```
-
-</PostgreSQLOnly>
 
 ### Пример использования CASE
 
-<MySQLOnly>
+**MySQL**
 
 Создадим ту же процедуру категоризации студентов, но используя оператор CASE:
 
-```sql-executable-Schedule
+```sql
 CREATE PROCEDURE categorize_student_with_case(
     IN student_id INT,
     OUT category VARCHAR(20)
@@ -182,13 +182,11 @@ CALL categorize_student_with_case(1, @category);
 SELECT @category AS age_category;
 ```
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 Создадим ту же функцию категоризации студентов, но используя оператор CASE:
 
-```sql-executable-Schedule
+```sql
 CREATE OR REPLACE FUNCTION categorize_student_with_case(student_id INT)
 RETURNS VARCHAR(20)
 LANGUAGE plpgsql
@@ -218,7 +216,11 @@ $$;
 SELECT categorize_student_with_case(1) AS age_category;
 ```
 
-</PostgreSQLOnly>
+**MySQL**
+
+| age_category |
+| ------------ |
+| Молодой      |
 
 ## Цикл WHILE
 
@@ -226,7 +228,7 @@ SELECT categorize_student_with_case(1) AS age_category;
 
 ### Синтаксис WHILE
 
-<MySQLOnly>
+**MySQL**
 
 ```sql
 WHILE условие DO
@@ -234,9 +236,7 @@ WHILE условие DO
 END WHILE;
 ```
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 ```sql
 WHILE условие LOOP
@@ -244,15 +244,13 @@ WHILE условие LOOP
 END LOOP;
 ```
 
-</PostgreSQLOnly>
-
 ### Пример использования WHILE
 
 Рассмотрим пример хранимой процедуры для создания нескольких тестовых предметов:
 
-<MySQLOnly>
+**MySQL**
 
-```sql-executable-Schedule
+```sql
 CREATE PROCEDURE create_test_subjects(IN count_subjects INT)
 BEGIN
     DECLARE i INT DEFAULT 1;
@@ -277,11 +275,9 @@ CALL create_test_subjects(3);
 SELECT * FROM Subject WHERE name LIKE 'Test Subject%';
 ```
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
-
-```sql-executable-Schedule
+```sql
 CREATE OR REPLACE PROCEDURE create_test_subjects(count_subjects INT)
 LANGUAGE plpgsql
 AS $$
@@ -311,7 +307,10 @@ CALL create_test_subjects(3);
 SELECT * FROM Subject WHERE name LIKE 'Test Subject%';
 ```
 
-</PostgreSQLOnly>
-
+| id  | name           |
+| --- | -------------- |
+| 21  | Test Subject 1 |
+| 22  | Test Subject 2 |
+| 23  | Test Subject 3 |
 
 Операторы управления потоком делают хранимые процедуры и функции мощным инструментом для реализации сложной бизнес-логики прямо в базе данных! 🚀
