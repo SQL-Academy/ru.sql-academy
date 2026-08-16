@@ -70,4 +70,4 @@ meta:
 
 ![Пример сертификата](https://sql-academy.org/static/guidePage/intro-intro/certificate_ru.jpg)
 
-Удачи в изучении SQL! Первый шаг уже успешно сделан ✨
+Удачи в изучении SQL! Первый шаг уже успешно сделан 🚀
