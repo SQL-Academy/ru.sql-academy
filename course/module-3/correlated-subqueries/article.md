@@ -1,7 +1,7 @@
 ---
 meta:
-    title: 'Коррелированные подзапросы'
-    description: 'Коррелированные и некоррелированные подзапросы в SQL, их синтаксис'
+    title: "Коррелированные подзапросы"
+    description: "Коррелированные и некоррелированные подзапросы в SQL, их синтаксис"
 ---
 
 # Коррелированные подзапросы
@@ -30,9 +30,9 @@ FROM FamilyMembers;
 | Andie Quincey     | 3600        |
 | Lela Quincey      | 650         |
 | Annie Quincey     | 1060        |
-| Ernest Forrest    | <NULL>      |
-| Constance Forrest | <NULL>      |
-| Wednesday Addams  | <NULL>      |
+| Ernest Forrest    | \<NULL>     |
+| Constance Forrest | \<NULL>     |
+| Wednesday Addams  | \<NULL>     |
 
 В данном случае, коррелированный подзапрос ссылается к столбцу `member_id` из основного запроса.
 

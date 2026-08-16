@@ -1,16 +1,16 @@
 ---
 meta:
-    title: 'Что такое NULL и как с ним работать в SQL?'
-    description: 'NULL в SQL обозначает отсутствие данных. Узнайте, как работать с NULL с помощью операторов IS NULL, IS NOT NULL и функций COALESCE, ISNULL, IFNULL.'
+    title: "Что такое NULL и как с ним работать в SQL?"
+    description: "NULL в SQL обозначает отсутствие данных. Узнайте, как работать с NULL с помощью операторов IS NULL, IS NOT NULL и функций COALESCE, ISNULL, IFNULL."
 ---
 
 > **NULL** — это специальное значение в SQL, обозначающее отсутствие данных или неизвестное значение.
 
 ## Особенности NULL:
 
--   `NULL` не эквивалентно пустой строке или нулю.
--   Операции с `NULL` возвращают `NULL`.
--   Сравнение `NULL` = `NULL` возвращает `FALSE`.
+- `NULL` не эквивалентно пустой строке или нулю.
+- Операции с `NULL` возвращают `NULL`.
+- Сравнение `NULL` = `NULL` возвращает `FALSE`.
 
 ## Работа с NULL
 
@@ -26,30 +26,35 @@ SELECT * FROM employees WHERE birth_date IS NOT NULL;
 
 ## Функции для работы с NULL
 
--   <a href="/handbook/COALESCE" target="_blank">
-        **COALESCE**
-    </a>
+- <a href="https://sql-academy.org/ru/handbook/COALESCE" target="_blank">
+    **COALESCE**
+  </a>
+
     Возвращает первый элемент списка, не равный `NULL`
 
     ```sql
     COALESCE(val1[, val2, ...., val_n])
     ```
 
--   <a href="/handbook/ISNULL" target="_blank">
-        **ISNULL**
-    </a>
+- <a href="https://sql-academy.org/ru/handbook/ISNULL" target="_blank">
+    **ISNULL**
+  </a>
+
     Возвращает 1 или 0 в зависимости от того, равно ли выражение `NULL`
 
     ```sql
     ISNULL(value)
     ```
 
--   <a href="/handbook/IFNULL" target="_blank">
-        **IFNULL**
-    </a>
-    Возвращает значение, переданное 1-ым аргументом, если оно не равно `NULL`. В противном случае возвращает значение, переданное
-    вторым аргументом.
+- <a href="https://sql-academy.org/ru/handbook/IFNULL" target="_blank">
+    **IFNULL**
+  </a>
+
+    Возвращает значение, переданное 1-ым аргументом, если оно не равно `NULL`. В противном
+    случае возвращает значение, переданное вторым аргументом.
 
     ```sql
     IFNULL(value, alternative_value)
     ```
+
+Подробный разбор темы с примерами — в статье [«COALESCE в SQL: замена NULL и связка с NULLIF»](https://sql-academy.org/ru/blog/sql-coalesce).

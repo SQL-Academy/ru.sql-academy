@@ -1,9 +1,8 @@
 ---
 meta:
-    title: 'Хранимые функции в SQL'
-    description: 'Создание и использование хранимых функций в SQL. Синтаксис, параметры, типы возвращаемых значений и практические примеры.'
+    title: "Хранимые функции в SQL"
+    description: "Создание и использование хранимых функций в SQL. Синтаксис, параметры, типы возвращаемых значений и практические примеры."
 ---
-
 
 # Хранимые функции в SQL
 
@@ -14,7 +13,7 @@ meta:
 
 ## Общая структура хранимой функции
 
-<MySQLOnly>
+**MySQL**
 
 ```sql
 CREATE FUNCTION имя_функции(параметр1 ТИП, параметр2 ТИП, ...)
@@ -25,9 +24,7 @@ BEGIN
 END;
 ```
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 ```sql
 CREATE OR REPLACE FUNCTION имя_функции(параметр1 ТИП, параметр2 ТИП, ...)
@@ -45,15 +42,13 @@ $$;
 
 `AS $$ ... $$` — **долларовое квотирование**, специальный способ обрамления тела функции. Позволяет избежать экранирования символов внутри функции.
 
-</PostgreSQLOnly>
-
 ## Простой пример функции
 
 Создадим функцию для определения, является ли человек совершеннолетним по дате рождения:
 
-<MySQLOnly>
+**MySQL**
 
-```sql-executable
+```sql
 CREATE FUNCTION is_adult(birth_date DATE)
 RETURNS BOOLEAN
 BEGIN
@@ -61,11 +56,9 @@ BEGIN
 END;
 ```
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
-
-```sql-executable
+```sql
 CREATE OR REPLACE FUNCTION is_adult(birth_date DATE)
 RETURNS BOOLEAN
 LANGUAGE plpgsql
@@ -75,14 +68,12 @@ BEGIN
 END;
 $$;
 ```
-
-</PostgreSQLOnly>
 
 Теперь эту функцию можно использовать в любом запросе:
 
-<MySQLOnly>
+**MySQL**
 
-```sql-executable
+```sql
 -- Создаём функцию
 CREATE FUNCTION is_adult(birth_date DATE)
 RETURNS BOOLEAN
@@ -96,11 +87,9 @@ SELECT
     is_adult('2000-03-20') AS adult_status;
 ```
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
-
-```sql-executable
+```sql
 -- Создаём функцию
 CREATE OR REPLACE FUNCTION is_adult(birth_date DATE)
 RETURNS BOOLEAN
@@ -117,16 +106,25 @@ SELECT
     is_adult('2000-03-20') AS adult_status;
 ```
 
-</PostgreSQLOnly>
+**MySQL**
 
+| child_status | adult_status |
+| ------------ | ------------ |
+| 0            | 1            |
+
+**PostgreSQL**
+
+| child_status | adult_status |
+| ------------ | ------------ |
+| false        | true         |
 
 ## Использование функций в запросах к таблицам
 
 Хранимые функции особенно полезны при работе с реальными данными. Например, мы можем использовать нашу функцию для фильтрации студентов по возрасту:
 
-<MySQLOnly>
+**MySQL**
 
-```sql-executable-Schedule
+```sql
 -- Создаём функцию
 CREATE FUNCTION is_adult(birth_date DATE)
 RETURNS BOOLEAN
@@ -145,11 +143,9 @@ WHERE is_adult(birthday) = TRUE
 LIMIT 5;
 ```
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
-
-```sql-executable-Schedule
+```sql
 -- Создаём функцию
 CREATE OR REPLACE FUNCTION is_adult(birth_date DATE)
 RETURNS BOOLEAN
@@ -171,15 +167,33 @@ WHERE is_adult(birthday) = TRUE
 LIMIT 5;
 ```
 
-</PostgreSQLOnly>
+**MySQL**
+
+| first_name | last_name | birthday                 | is_adult |
+| ---------- | --------- | ------------------------ | -------- |
+| Nikolaj    | Sokolov   | 2000-10-01T00:00:00.000Z | 1        |
+| Vyacheslav | Eliseev   | 2000-11-21T00:00:00.000Z | 1        |
+| Ivan       | Efremov   | 2000-09-19T00:00:00.000Z | 1        |
+| Anatolij   | ZHdanov   | 2007-07-15T00:00:00.000Z | 1        |
+| Georgij    | Noskov    | 2000-03-03T00:00:00.000Z | 1        |
+
+**PostgreSQL**
+
+| first_name | last_name | birthday                 | is_adult |
+| ---------- | --------- | ------------------------ | -------- |
+| Nikolaj    | Sokolov   | 2000-10-01T00:00:00.000Z | true     |
+| Vyacheslav | Eliseev   | 2000-11-21T00:00:00.000Z | true     |
+| Ivan       | Efremov   | 2000-09-19T00:00:00.000Z | true     |
+| Anatolij   | ZHdanov   | 2007-07-15T00:00:00.000Z | true     |
+| Georgij    | Noskov    | 2000-03-03T00:00:00.000Z | true     |
 
 ## Функции с запросами к базе данных
 
 Хранимые функции могут выполнять SQL-запросы внутри себя для получения необходимых данных:
 
-<MySQLOnly>
+**MySQL**
 
-```sql-executable-Schedule
+```sql
 CREATE FUNCTION get_student_lessons_count(student_id INT, target_date DATE)
 RETURNS INT
 BEGIN
@@ -195,11 +209,9 @@ BEGIN
 END;
 ```
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
-
-```sql-executable-Schedule
+```sql
 CREATE OR REPLACE FUNCTION get_student_lessons_count(student_id INT, target_date DATE)
 RETURNS INT
 LANGUAGE plpgsql
@@ -218,26 +230,23 @@ END;
 $$;
 ```
 
-</PostgreSQLOnly>
-
 Эта функция подсчитывает количество уроков у конкретного студента в определённый день:
 
-<MySQLOnly>
+**MySQL**
 
 ```sql
 SELECT get_student_lessons_count(1, '2019-09-01') AS lessons_today;
 ```
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 ```sql
 SELECT get_student_lessons_count(1, '2019-09-01') AS lessons_today;
 ```
 
-</PostgreSQLOnly>
-
+| lessons_today |
+| ------------- |
+| 3             |
 
 ## Разбор примера с переменными
 
@@ -250,11 +259,9 @@ DECLARE lessons_count INT;
 
 Эта строка **объявляет переменную** `lessons_count` типа `INT`. Переменная будет хранить результат нашего запроса.
 
-<PostgreSQLOnly>
+**PostgreSQL**
 
 > **Важно для PostgreSQL:** Все переменные должны быть объявлены в блоке `DECLARE` до начала тела функции (до `BEGIN`). Объявлять переменные внутри тела функции нельзя.
-
-</PostgreSQLOnly>
 
 ```sql
 SELECT COUNT(*) INTO lessons_count
@@ -266,9 +273,9 @@ WHERE sic.student = student_id
 
 Здесь происходит **сохранение результата запроса в переменную**:
 
--   `SELECT COUNT(*)` — подсчитывает количество записей
--   `INTO lessons_count` — сохраняет результат в переменную `lessons_count`
--   Остальная часть — обычный SQL-запрос с JOIN и условиями
+- `SELECT COUNT(*)` — подсчитывает количество записей
+- `INTO lessons_count` — сохраняет результат в переменную `lessons_count`
+- Остальная часть — обычный SQL-запрос с JOIN и условиями
 
 ```sql
 RETURN lessons_count;
@@ -280,17 +287,15 @@ RETURN lessons_count;
 
 ## Управление хранимыми функциями
 
--   **Просмотр существующих функций**
+- **Просмотр существующих функций**
 
-    <MySQLOnly>
+    **MySQL**
 
     ```sql
     SHOW FUNCTION STATUS WHERE Db = 'your_database_name';
     ```
 
-    </MySQLOnly>
-
-    <PostgreSQLOnly>
+    **PostgreSQL**
 
     ```sql
     SELECT routine_name, routine_type
@@ -298,29 +303,23 @@ RETURN lessons_count;
     WHERE routine_type = 'FUNCTION' AND routine_schema = 'public';
     ```
 
-    </PostgreSQLOnly>
+- **Удаление функции**
 
--   **Удаление функции**
-
-    <MySQLOnly>
+    **MySQL**
 
     ```sql
     DROP FUNCTION IF EXISTS is_adult;
     ```
 
-    </MySQLOnly>
-
-    <PostgreSQLOnly>
+    **PostgreSQL**
 
     ```sql
     DROP FUNCTION IF EXISTS is_adult(DATE);
     ```
 
-    </PostgreSQLOnly>
+- **Изменение функции**
 
--   **Изменение функции**
-
-    <MySQLOnly>
+    **MySQL**
 
     Для изменения функции в MySQL нужно сначала удалить старую версию, а затем создать новую:
 
@@ -330,9 +329,7 @@ RETURN lessons_count;
     CREATE FUNCTION is_adult(birth_date DATE) ...
     ```
 
-    </MySQLOnly>
-
-    <PostgreSQLOnly>
+    **PostgreSQL**
 
     В PostgreSQL можно использовать `CREATE OR REPLACE FUNCTION`:
 
@@ -341,7 +338,5 @@ RETURN lessons_count;
     RETURNS BOOLEAN
     -- новая реализация
     ```
-
-    </PostgreSQLOnly>
 
 Хранимые функции — это мощный инструмент для создания переиспользуемой бизнес-логики прямо в базе данных. Они помогают централизовать вычисления и обеспечить консистентность данных во всём приложении! 🚀

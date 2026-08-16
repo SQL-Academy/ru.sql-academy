@@ -1,7 +1,7 @@
 ---
 meta:
-    title: 'Базовый синтаксис SQL запроса'
-    description: 'Пример простых SQL запросов к базе данных. Использование псевдонимов (алиасов) в SQL запросах.'
+    title: "Базовый синтаксис SQL запроса"
+    description: "Пример простых SQL запросов к базе данных. Использование псевдонимов (алиасов) в SQL запросах."
 ---
 
 # Базовый синтаксис SQL запроса
@@ -15,7 +15,7 @@ meta:
 но и произвольные строки, числа, даты и т.д. Например, так можно вывести произвольную строку:
 
 ```sql
-SELECT "Hello world"
+SELECT 'Hello world'
 ```
 
 ## Вывод всех данных из таблицы
@@ -23,21 +23,21 @@ SELECT "Hello world"
 Для вывода всех полей из определённой таблицы используется символ `*`. Давайте взглянем на схему базы данных и
 выведем данные одной из таблиц.
 
-<ERD databaseName="Family" />
+ER-диаграмма базы данных Family: [открыть на SQL Academy](https://sql-academy.org/ru/guide/basic-syntax-sql-query).
 
 ```sql
 SELECT * FROM FamilyMembers
 ```
 
-| member_id | status   | member_name       | birthday             |
-| --------- | -------- | ----------------- | -------------------- |
-| 1         | father   | Headley Quincey   | 1960-05-13T00:00:00Z |
-| 2         | mother   | Flavia Quincey    | 1963-02-16T00:00:00Z |
-| 3         | son      | Andie Quincey     | 1983-06-05T00:00:00Z |
-| 4         | daughter | Lela Quincey      | 1985-06-07T00:00:00Z |
-| 5         | daughter | Annie Quincey     | 1988-04-10T00:00:00Z |
-| 6         | father   | Ernest Forrest    | 1961-09-11T00:00:00Z |
-| 7         | mother   | Constance Forrest | 1968-09-06T00:00:00Z |
+| member_id | status   | member_name       | birthday                 |
+| --------- | -------- | ----------------- | ------------------------ |
+| 1         | father   | Headley Quincey   | 1960-05-13T00:00:00.000Z |
+| 2         | mother   | Flavia Quincey    | 1963-02-16T00:00:00.000Z |
+| 3         | son      | Andie Quincey     | 1983-06-05T00:00:00.000Z |
+| 4         | daughter | Lela Quincey      | 1985-06-07T00:00:00.000Z |
+| 5         | daughter | Annie Quincey     | 1988-04-10T00:00:00.000Z |
+| 6         | father   | Ernest Forrest    | 1961-09-11T00:00:00.000Z |
+| 7         | mother   | Constance Forrest | 1968-09-06T00:00:00.000Z |
 
 ## Вывод данных из определённых колонок таблицы
 

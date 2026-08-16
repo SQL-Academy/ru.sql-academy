@@ -1,7 +1,7 @@
 ---
 meta:
-  title: "Условная логика, оператор CASE"
-  description: "Условная логика в SQL, использование оператор CASE WHEN THEN END"
+    title: "Условная логика, оператор CASE"
+    description: "Условная логика в SQL, использование оператор CASE WHEN THEN END"
 ---
 
 # Условная логика, оператор CASE
@@ -18,13 +18,13 @@ SQL, подобно многим языкам программирования, 
 есть ли студенту 18 лет. Это и есть пример условной логики, при которой должно вывестись либо одно значение, либо другое
 в зависимости от конкретного условия.
 
-<ERD databaseName="Schedule" />
+ER-диаграмма базы данных Schedule: [открыть на SQL Academy](https://sql-academy.org/ru/guide/case-expression).
 
 Реализация такого запроса с помощью `CASE` может выглядеть следующим образом:
 
-<MySQLOnly>
+**MySQL**
 
-```sql-executable-Schedule
+```sql
 SELECT first_name, last_name,
 CASE
   WHEN TIMESTAMPDIFF(YEAR, birthday, NOW()) >= 18 THEN 'Совершеннолетний'
@@ -33,11 +33,9 @@ END AS status
 FROM Student
 ```
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
-
-```sql-executable-Schedule
+```sql
 SELECT first_name, last_name,
 CASE
   WHEN EXTRACT(YEAR FROM AGE(NOW(), birthday)) >= 18 THEN 'Совершеннолетний'
@@ -46,7 +44,30 @@ END AS status
 FROM Student
 ```
 
-</PostgreSQLOnly>
+| first_name | last_name    | status             |
+| ---------- | ------------ | ------------------ |
+| Nikolaj    | Sokolov      | Совершеннолетний   |
+| Vyacheslav | Eliseev      | Совершеннолетний   |
+| Ivan       | Efremov      | Совершеннолетний   |
+| Anatolij   | ZHdanov      | Несовершеннолетний |
+| Georgij    | Noskov       | Совершеннолетний   |
+| Artyom     | Sergeev      | Несовершеннолетний |
+| Arina      | Evseeva      | Совершеннолетний   |
+| Angelina   | Voroncova    | Совершеннолетний   |
+| Ekaterina  | Ustinova     | Совершеннолетний   |
+| Raisa      | Lapina       | Совершеннолетний   |
+| Leonid     | Ignatov      | Несовершеннолетний |
+| Snezhana   | Seliverstova | Совершеннолетний   |
+| Semyon     | Biryukov     | Совершеннолетний   |
+| Georgij    | Baranov      | Совершеннолетний   |
+| YUliya     | Vishnyakova  | Совершеннолетний   |
+| Valentina  | Bolshakova   | Совершеннолетний   |
+| Leonid     | Kryukov      | Совершеннолетний   |
+| Vladislav  | Cvetkov      | Совершеннолетний   |
+| Snezhana   | Morozova     | Совершеннолетний   |
+| Lyubov     | Borisova     | Совершеннолетний   |
+| Anfisa     | Kalashnikova | Совершеннолетний   |
+| Anna       | Osipova      | Совершеннолетний   |
 
 ## Синтаксис поискового выражения CASE
 
@@ -69,9 +90,9 @@ END
 
 ![Этапы школьного образования](https://sql-academy.org/static/guidePage/case-expression/ru_school_education_stages.png "Этапы школьного образования")
 
-<MySQLOnly>
+**MySQL**
 
-```sql-executable-Schedule
+```sql
 SELECT name,
 CASE
   WHEN SUBSTRING(name, 1, INSTR(name, ' ')) IN (10, 11) THEN 'Старшая школа'
@@ -81,11 +102,9 @@ END AS stage
 FROM Class
 ```
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
-
-```sql-executable-Schedule
+```sql
 SELECT name,
 CASE
   WHEN SUBSTRING(name, 1, POSITION(' ' IN name) - 1) IN ('10', '11') THEN 'Старшая школа'
@@ -95,28 +114,41 @@ END AS stage
 FROM Class
 ```
 
-</PostgreSQLOnly>
+| name | stage           |
+| ---- | --------------- |
+| 8 A  | Средняя школа   |
+| 8 B  | Средняя школа   |
+| 9 C  | Средняя школа   |
+| 9 B  | Средняя школа   |
+| 9 A  | Средняя школа   |
+| 10 B | Старшая школа   |
+| 10 A | Старшая школа   |
+| 11 B | Старшая школа   |
+| 11 A | Старшая школа   |
+| 7 A  | Средняя школа   |
+| 7 B  | Средняя школа   |
+| 6 A  | Средняя школа   |
+| 6 B  | Средняя школа   |
+| 5 A  | Средняя школа   |
+| 5 B  | Средняя школа   |
+| 4 A  | Начальная школа |
 
-<MySQLOnly>
+**MySQL**
 
 - Сначала мы извлекаем номер класса из его названия
-  ```sql
-  SUBSTRING(name, 1, INSTR(name, ' '))
-  ```
+    ```sql
+    SUBSTRING(name, 1, INSTR(name, ' '))
+    ```
 
-</MySQLOnly>
-
-<PostgreSQLOnly>
+**PostgreSQL**
 
 - Сначала мы извлекаем номер класса из его названия
-  ```sql
-  SUBSTRING(name, 1, POSITION(' ' IN name) - 1)
-  ```
+    ```sql
+    SUBSTRING(name, 1, POSITION(' ' IN name) - 1)
+    ```
 
-</PostgreSQLOnly>
-
-- Далее мы проверяем вхождение данного номера в список классов, относящихся к «Старшая школа» и «Средняя школа».
-- Если номер класса не находится в диапазоне 5–11, мы выводим «Начальная школа».
+* Далее мы проверяем вхождение данного номера в список классов, относящихся к «Старшая школа» и «Средняя школа».
+* Если номер класса не находится в диапазоне 5–11, мы выводим «Начальная школа».
 
 ## Синтаксис простого выражения CASE
 
@@ -136,9 +168,9 @@ END
 
 Используя этот синтаксис, можно переписать наш предыдущий пример таким образом:
 
-<MySQLOnly>
+**MySQL**
 
-```sql-executable-Schedule
+```sql
 SELECT name,
 CASE SUBSTRING(name, 1, INSTR(name, ' '))
   WHEN 11 THEN 'Старшая школа'
@@ -153,11 +185,9 @@ END AS stage
 FROM Class
 ```
 
-</MySQLOnly>
+**PostgreSQL**
 
-<PostgreSQLOnly>
-
-```sql-executable-Schedule
+```sql
 SELECT name,
 CASE SUBSTRING(name, 1, POSITION(' ' IN name) - 1)
   WHEN '11' THEN 'Старшая школа'
@@ -172,7 +202,24 @@ END AS stage
 FROM Class
 ```
 
-</PostgreSQLOnly>
+| name | stage           |
+| ---- | --------------- |
+| 8 A  | Средняя школа   |
+| 8 B  | Средняя школа   |
+| 9 C  | Средняя школа   |
+| 9 B  | Средняя школа   |
+| 9 A  | Средняя школа   |
+| 10 B | Старшая школа   |
+| 10 A | Старшая школа   |
+| 11 B | Старшая школа   |
+| 11 A | Старшая школа   |
+| 7 A  | Средняя школа   |
+| 7 B  | Средняя школа   |
+| 6 A  | Средняя школа   |
+| 6 B  | Средняя школа   |
+| 5 A  | Средняя школа   |
+| 5 B  | Средняя школа   |
+| 4 A  | Начальная школа |
 
 ### Проверьте себя
 
@@ -185,3 +232,9 @@ CASE 2
   ELSE 'Много'
 END
 ```
+
+1. Ноль — Оператор CASE не может вернуть "Ноль", потому что значения "2" и "0" не равны.
+
+2. Один — Оператор CASE не может вернуть "Один", потому что значения "2" и "1" не равны.
+
+3. **Правильный ответ:** Много — Всё верно, оператор CASE действительно вернёт "Много", потому что ни одно из значений, переданных в WHEN, не совпало с "2".
