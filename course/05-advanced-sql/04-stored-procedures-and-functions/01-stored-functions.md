@@ -83,8 +83,8 @@ END;
 
 -- Используем функцию
 SELECT
-    is_adult('2010-05-15') AS child_status,
-    is_adult('2000-03-20') AS adult_status;
+    is_adult('2010-05-15') AS child_is_adult,
+    is_adult('2000-03-20') AS adult_is_adult;
 ```
 
 **PostgreSQL**
@@ -102,21 +102,21 @@ $$;
 
 -- Используем функцию
 SELECT
-    is_adult('2010-05-15') AS child_status,
-    is_adult('2000-03-20') AS adult_status;
+    is_adult('2010-05-15') AS child_is_adult,
+    is_adult('2000-03-20') AS adult_is_adult;
 ```
 
 **MySQL**
 
-| child_status | adult_status |
-| ------------ | ------------ |
-| 0            | 1            |
+| child_is_adult | adult_is_adult |
+| -------------- | -------------- |
+| 0              | 1              |
 
 **PostgreSQL**
 
-| child_status | adult_status |
-| ------------ | ------------ |
-| false        | true         |
+| child_is_adult | adult_is_adult |
+| -------------- | -------------- |
+| false          | true           |
 
 ## Использование функций в запросах к таблицам
 
