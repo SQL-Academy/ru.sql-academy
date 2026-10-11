@@ -16,16 +16,22 @@ meta:
 USE имя_базы_данных;
 ```
 
+- `имя_базы_данных` — база данных, в которой будут создаваться таблицы.
+
 Для создания таблицы используется оператор `CREATE TABLE`. Его базовый синтаксис имеет следующий вид:
 
 ```sql
 CREATE TABLE [IF NOT EXISTS] имя_таблицы (
-     столбец_1 тип_данных,
-    [столбец_2 тип_данных,]
-    ...
-    [столбец_n тип_данных,]
+    столбец тип_данных [, ...]
 );
 ```
+
+- `IF NOT EXISTS` (ключевое слово, необязательный) — не создавать таблицу, если таблица с таким именем уже есть. Без этой части запрос в
+  таком случае завершится ошибкой.
+- `имя_таблицы` — имя новой таблицы.
+- `столбец` — имя столбца. Пар `столбец тип_данных` может быть несколько, через запятую.
+- `тип_данных` — какие значения хранит столбец, например `INTEGER` для чисел или `VARCHAR(255)` для
+  строк.
 
 Например, создадим таблицу пользователей.
 
@@ -188,184 +194,202 @@ WHERE table_schema = current_schema() AND table_name = 'users';
 
 **MySQL**
 
-- Первичный ключ.
+**Первичный ключ**
 
-    Если вы не определили первичный ключ с помощью параметров столбца, то это можно сделать с помощью дополнительных параметров таблицы, добавив запись `PRIMARY KEY (<столбец_1>, <столбец_n>)` после перечисления столбцов:
+Если вы не определили первичный ключ с помощью параметров столбца, то это можно сделать с помощью дополнительных параметров таблицы, добавив запись `PRIMARY KEY (столбец [, ...])` после перечисления столбцов:
 
-    ```sql
-    CREATE TABLE Users (
-        id INTEGER,
-        name VARCHAR(255) NOT NULL,
-        age INTEGER NOT NULL DEFAULT 18,
-        PRIMARY KEY (id)
-    );
-    ```
+```sql
+CREATE TABLE Users (
+    id INTEGER,
+    name VARCHAR(255) NOT NULL,
+    age INTEGER NOT NULL DEFAULT 18,
+    PRIMARY KEY (id)
+);
+```
 
 **PostgreSQL**
 
-- Первичный ключ.
+**Первичный ключ**
 
-    Если вы не определили первичный ключ с помощью параметров столбца, то это можно сделать с помощью дополнительных параметров таблицы, добавив запись `PRIMARY KEY (<столбец_1>, <столбец_n>)` после перечисления столбцов:
+Если вы не определили первичный ключ с помощью параметров столбца, то это можно сделать с помощью дополнительных параметров таблицы, добавив запись `PRIMARY KEY (столбец [, ...])` после перечисления столбцов:
 
-    ```sql
-    CREATE TABLE Users (
-        id INTEGER,
-        name VARCHAR(255) NOT NULL,
-        age INTEGER NOT NULL DEFAULT 18,
-        PRIMARY KEY (id)
-    );
-    ```
+```sql
+CREATE TABLE Users (
+    id INTEGER,
+    name VARCHAR(255) NOT NULL,
+    age INTEGER NOT NULL DEFAULT 18,
+    PRIMARY KEY (id)
+);
+```
 
 **MySQL**
 
-- Внешние ключи.
+**Внешние ключи**
 
-    Предположим, что мы хотим хранить данные о компании, в которой работают наши пользователи. Давайте создадим небольшую таблицу `Companies`, в которой мы будем хранить уникальный идентификатор и название компании:
+Предположим, что мы хотим хранить данные о компании, в которой работают наши пользователи. Давайте создадим небольшую таблицу `Companies`, в которой мы будем хранить уникальный идентификатор и название компании:
 
-    ```sql
-    CREATE TABLE Companies (
-        id INTEGER,
-        name VARCHAR(255) NOT NULL,
-        PRIMARY KEY (id)
-    );
-    ```
+```sql
+CREATE TABLE Companies (
+    id INTEGER,
+    name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+```
 
-    Дальше нужно добавить в таблицу `Users` поле `company` – место работы нашего пользователя, которое будет ссылаться на запись в таблице `Companies`. Полный запрос для создания таблицы будет выглядеть так:
+Дальше нужно добавить в таблицу `Users` поле `company` – место работы нашего пользователя, которое будет ссылаться на запись в таблице `Companies`. Полный запрос для создания таблицы будет выглядеть так:
 
-    ```sql
-    CREATE TABLE Users (
-        id INTEGER,
-        name VARCHAR(255) NOT NULL,
-        age INTEGER NOT NULL DEFAULT 18,
-        company INTEGER,
-        PRIMARY KEY (id)
-    );
-    ```
+```sql
+CREATE TABLE Users (
+    id INTEGER,
+    name VARCHAR(255) NOT NULL,
+    age INTEGER NOT NULL DEFAULT 18,
+    company INTEGER,
+    PRIMARY KEY (id)
+);
+```
 
-    Для того, чтобы при добавлении новых записей в таблицу `Users` гарантировать, что в колонке `company` находится идентификатор, существующий в таблице `Companies`,
-    используется внешний ключ. Он имеет следующий синтаксис:
+Для того, чтобы при добавлении новых записей в таблицу `Users` гарантировать, что в колонке `company` находится идентификатор, существующий в таблице `Companies`,
+используется внешний ключ. Он имеет следующий синтаксис:
 
-    ```sql
-    FOREIGN KEY (<столбец_1>, <столбец_n>)
-    REFERENCES <внешняя_таблица> (<столбец_во_внешней_таблице_1>, <столбец_во_внешней_таблице_n>)
-    [ON DELETE действие]
-    [ON UPDATE действие]
-    ```
+```sql
+FOREIGN KEY (столбец [, ...])
+REFERENCES внешняя_таблица (столбец_внешней_таблицы [, ...])
+[ON DELETE действие]
+[ON UPDATE действие]
+```
 
-    Полный запрос для создания таблицы с внешним ключом будет таким:
+- `столбец` — столбец этой таблицы, который ссылается на другую таблицу. Для составного ключа
+  столбцы перечисляются через запятую.
+- `внешняя_таблица` — таблица, на записи которой ссылается внешний ключ.
+- `столбец_внешней_таблицы` — столбец внешней таблицы, с которым сверяются значения, обычно её первичный ключ.
+  Столбцов столько же и в том же порядке, что и в `FOREIGN KEY`.
+- `ON DELETE действие` (необязательный) — что сделать с записями этой таблицы, когда удаляют запись, на которую они ссылаются. Значения: `RESTRICT`, `CASCADE`, `SET NULL`, `NO ACTION`.
+- `ON UPDATE действие` (необязательный) — что сделать с записями этой таблицы, когда меняется значение, на которое они
+  ссылаются. Значения: `RESTRICT`, `CASCADE`, `SET NULL`, `NO ACTION`.
 
-    ```sql
-    CREATE TABLE Users (
-        id INTEGER,
-        name VARCHAR(255) NOT NULL,
-        age INTEGER NOT NULL DEFAULT 18,
-        company INTEGER,
-        PRIMARY KEY (id),
-        FOREIGN KEY (company) REFERENCES Companies (id)
-    );
-    ```
+Полный запрос для создания таблицы с внешним ключом будет таким:
 
-    При наличии внешних ключей можно определить поведение текущей записи, при изменении или удалении записи, на которую она ссылается.
+```sql
+CREATE TABLE Users (
+    id INTEGER,
+    name VARCHAR(255) NOT NULL,
+    age INTEGER NOT NULL DEFAULT 18,
+    company INTEGER,
+    PRIMARY KEY (id),
+    FOREIGN KEY (company) REFERENCES Companies (id)
+);
+```
 
-    ```sql
-    CREATE TABLE Users (
-        id INTEGER,
-        name VARCHAR(255) NOT NULL,
-        age INTEGER NOT NULL DEFAULT 18,
-        company INTEGER,
-        PRIMARY KEY (id),
-        FOREIGN KEY (company) REFERENCES Companies (id)
-        ON DELETE RESTRICT ON UPDATE CASCADE
-    );
-    ```
+При наличии внешних ключей можно определить поведение текущей записи, при изменении или удалении записи, на которую она ссылается.
 
-    `ON DELETE RESTRICT` означает, что если попробовать удалить компанию, у которой в таблице `Users` есть данные, база данных не даст этого сделать:
+```sql
+CREATE TABLE Users (
+    id INTEGER,
+    name VARCHAR(255) NOT NULL,
+    age INTEGER NOT NULL DEFAULT 18,
+    company INTEGER,
+    PRIMARY KEY (id),
+    FOREIGN KEY (company) REFERENCES Companies (id)
+    ON DELETE RESTRICT ON UPDATE CASCADE
+);
+```
 
-    ```sql
-    Cannot delete or update a parent row: a foreign key constraint fails
-    ```
+`ON DELETE RESTRICT` означает, что если попробовать удалить компанию, у которой в таблице `Users` есть данные, база данных не даст этого сделать:
 
-    Если бы было указано `ON DELETE CASCADE`, то при удалении компании были бы удалены все пользователи, ссылающиеся на эту компанию.
+```sql
+Cannot delete or update a parent row: a foreign key constraint fails
+```
 
-    Есть ещё одна опция — `ON DELETE SET NULL`. При её использовании база данных запишет `NULL` в качестве значения поля `company` для всех пользователей, работавших в удалённой компании.
+Если бы было указано `ON DELETE CASCADE`, то при удалении компании были бы удалены все пользователи, ссылающиеся на эту компанию.
 
-    `ON UPDATE CASCADE` означает, что если компания изменит свой идентификатор, то все пользователи (`Users`) получат новый идентификатор в поле company.
+Есть ещё одна опция — `ON DELETE SET NULL`. При её использовании база данных запишет `NULL` в качестве значения поля `company` для всех пользователей, работавших в удалённой компании.
+
+`ON UPDATE CASCADE` означает, что если компания изменит свой идентификатор, то все пользователи (`Users`) получат новый идентификатор в поле company.
 
 **PostgreSQL**
 
-- Внешние ключи.
+**Внешние ключи**
 
-    Предположим, что мы хотим хранить данные о компании, в которой работают наши пользователи. Давайте создадим небольшую таблицу `Companies`, в которой мы будем хранить уникальный идентификатор и название компании:
+Предположим, что мы хотим хранить данные о компании, в которой работают наши пользователи. Давайте создадим небольшую таблицу `Companies`, в которой мы будем хранить уникальный идентификатор и название компании:
 
-    ```sql
-    CREATE TABLE Companies (
-        id INTEGER,
-        name VARCHAR(255) NOT NULL,
-        PRIMARY KEY (id)
-    );
-    ```
+```sql
+CREATE TABLE Companies (
+    id INTEGER,
+    name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+```
 
-    Дальше нужно добавить в таблицу `Users` поле `company` – место работы нашего пользователя, которое будет ссылаться на запись в таблице `Companies`. Полный запрос для создания таблицы будет выглядеть так:
+Дальше нужно добавить в таблицу `Users` поле `company` – место работы нашего пользователя, которое будет ссылаться на запись в таблице `Companies`. Полный запрос для создания таблицы будет выглядеть так:
 
-    ```sql
-    CREATE TABLE Users (
-        id INTEGER,
-        name VARCHAR(255) NOT NULL,
-        age INTEGER NOT NULL DEFAULT 18,
-        company INTEGER,
-        PRIMARY KEY (id)
-    );
-    ```
+```sql
+CREATE TABLE Users (
+    id INTEGER,
+    name VARCHAR(255) NOT NULL,
+    age INTEGER NOT NULL DEFAULT 18,
+    company INTEGER,
+    PRIMARY KEY (id)
+);
+```
 
-    Для того, чтобы при добавлении новых записей в таблицу `Users` гарантировать, что в колонке `company` находится идентификатор, существующий в таблице `Companies`,
-    используется внешний ключ. Он имеет следующий синтаксис:
+Для того, чтобы при добавлении новых записей в таблицу `Users` гарантировать, что в колонке `company` находится идентификатор, существующий в таблице `Companies`,
+используется внешний ключ. Он имеет следующий синтаксис:
 
-    ```sql
-    FOREIGN KEY (<столбец_1>, <столбец_n>)
-    REFERENCES <внешняя_таблица> (<столбец_во_внешней_таблице_1>, <столбец_во_внешней_таблице_n>)
-    [ON DELETE действие]
-    [ON UPDATE действие]
-    ```
+```sql
+FOREIGN KEY (столбец [, ...])
+REFERENCES внешняя_таблица (столбец_внешней_таблицы [, ...])
+[ON DELETE действие]
+[ON UPDATE действие]
+```
 
-    Полный запрос для создания таблицы с внешним ключом будет таким:
+- `столбец` — столбец этой таблицы, который ссылается на другую таблицу. Для составного ключа
+  столбцы перечисляются через запятую.
+- `внешняя_таблица` — таблица, на записи которой ссылается внешний ключ.
+- `столбец_внешней_таблицы` — столбец внешней таблицы, с которым сверяются значения, обычно её первичный ключ.
+  Столбцов столько же и в том же порядке, что и в `FOREIGN KEY`.
+- `ON DELETE действие` (необязательный) — что сделать с записями этой таблицы, когда удаляют запись, на которую они ссылаются. Значения: `RESTRICT`, `CASCADE`, `SET NULL`, `SET DEFAULT`, `NO ACTION`.
+- `ON UPDATE действие` (необязательный) — что сделать с записями этой таблицы, когда меняется значение, на которое они
+  ссылаются. Значения: `RESTRICT`, `CASCADE`, `SET NULL`, `SET DEFAULT`, `NO ACTION`.
 
-    ```sql
-    CREATE TABLE Users (
-        id INTEGER,
-        name VARCHAR(255) NOT NULL,
-        age INTEGER NOT NULL DEFAULT 18,
-        company INTEGER,
-        PRIMARY KEY (id),
-        FOREIGN KEY (company) REFERENCES Companies (id)
-    );
-    ```
+Полный запрос для создания таблицы с внешним ключом будет таким:
 
-    При наличии внешних ключей можно определить поведение текущей записи, при изменении или удалении записи, на которую она ссылается.
+```sql
+CREATE TABLE Users (
+    id INTEGER,
+    name VARCHAR(255) NOT NULL,
+    age INTEGER NOT NULL DEFAULT 18,
+    company INTEGER,
+    PRIMARY KEY (id),
+    FOREIGN KEY (company) REFERENCES Companies (id)
+);
+```
 
-    ```sql
-    CREATE TABLE Users (
-        id INTEGER,
-        name VARCHAR(255) NOT NULL,
-        age INTEGER NOT NULL DEFAULT 18,
-        company INTEGER,
-        PRIMARY KEY (id),
-        FOREIGN KEY (company) REFERENCES Companies (id)
-        ON DELETE RESTRICT ON UPDATE CASCADE
-    );
-    ```
+При наличии внешних ключей можно определить поведение текущей записи, при изменении или удалении записи, на которую она ссылается.
 
-    `ON DELETE RESTRICT` означает, что если попробовать удалить компанию, у которой в таблице `Users` есть данные, база данных не даст этого сделать:
+```sql
+CREATE TABLE Users (
+    id INTEGER,
+    name VARCHAR(255) NOT NULL,
+    age INTEGER NOT NULL DEFAULT 18,
+    company INTEGER,
+    PRIMARY KEY (id),
+    FOREIGN KEY (company) REFERENCES Companies (id)
+    ON DELETE RESTRICT ON UPDATE CASCADE
+);
+```
 
-    ```sql
-    ERROR:  update or delete on table "companies" violates foreign key constraint "users_company_fkey" on table "users"
-    DETAIL:  Key (id)=(1) is still referenced from table "users".
-    ```
+`ON DELETE RESTRICT` означает, что если попробовать удалить компанию, у которой в таблице `Users` есть данные, база данных не даст этого сделать:
 
-    Если бы было указано `ON DELETE CASCADE`, то при удалении компании были бы удалены все пользователи, ссылающиеся на эту компанию.
+```sql
+ERROR:  update or delete on table "companies" violates foreign key constraint "users_company_fkey" on table "users"
+DETAIL:  Key (id)=(1) is still referenced from table "users".
+```
 
-    Есть ещё одна опция — `ON DELETE SET NULL`. При её использовании база данных запишет `NULL` в качестве значения поля `company` для всех пользователей, работавших в удалённой компании.
+Если бы было указано `ON DELETE CASCADE`, то при удалении компании были бы удалены все пользователи, ссылающиеся на эту компанию.
 
-    `ON UPDATE CASCADE` означает, что если компания изменит свой идентификатор, то все пользователи (`Users`) получат новый идентификатор в поле company.
+Есть ещё одна опция — `ON DELETE SET NULL`. При её использовании база данных запишет `NULL` в качестве значения поля `company` для всех пользователей, работавших в удалённой компании.
+
+`ON UPDATE CASCADE` означает, что если компания изменит свой идентификатор, то все пользователи (`Users`) получат новый идентификатор в поле company.
 
 ## Удаление таблицы
 
@@ -374,6 +398,9 @@ WHERE table_schema = current_schema() AND table_name = 'users';
 ```sql
 DROP TABLE [IF EXISTS] имя_таблицы;
 ```
+
+- `IF EXISTS` (ключевое слово, необязательный) — не выдавать ошибку, если таблицы с таким именем нет.
+- `имя_таблицы` — таблица, которую нужно удалить вместе со всеми её данными.
 
 ## Интерактивное задание
 
