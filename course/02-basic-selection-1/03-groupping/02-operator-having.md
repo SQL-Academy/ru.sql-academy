@@ -123,14 +123,14 @@ HAVING условие_для_групп
 
     ```sql
     SELECT ... FROM Rooms
-    WHERE has_tv = True
+    WHERE has_tv = true
     ```
 
 - Затем сгруппировать данные записи о жилых помещениях по их типу
 
     ```sql
     SELECT ... FROM Rooms
-    WHERE has_tv = True
+    WHERE has_tv = true
     GROUP BY home_type
     ```
 
@@ -138,7 +138,7 @@ HAVING условие_для_групп
 
     ```sql
     SELECT ... FROM Rooms
-    WHERE has_tv = True
+    WHERE has_tv = true
     GROUP BY home_type
     HAVING COUNT(*) >= 5
     ```
@@ -147,7 +147,7 @@ HAVING условие_для_групп
   необходимо вывести название типа жилья и его минимальную стоимость.
     ```sql
     SELECT home_type, MIN(price) as min_price FROM Rooms
-    WHERE has_tv = True
+    WHERE has_tv = true
     GROUP BY home_type
     HAVING COUNT(*) >= 5;
     ```
