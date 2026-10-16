@@ -102,15 +102,6 @@ INSERT INTO Goods (good_id, good_name, type)
 SELECT 20, 'Table', 8;
 ```
 
-Но чаще этот способ нужен, когда данные **берутся из базы**: так копируют существующие строки или вставляют результаты вычислений. Например, продублируем все продукты питания под новыми номерами:
-
-```sql
-INSERT INTO Goods (good_id, good_name, type)
-SELECT good_id + 100, good_name, type
-FROM Goods
-WHERE type = 2;
-```
-
 Оба способа добавляют одну и ту же строку:
 
 | good_id | good_name            | type  |
@@ -134,6 +125,15 @@ WHERE type = 2;
 | 17      | airsoft game session | 4     |
 | 18      | netflix subscription | 4     |
 | **20**  | **Table**            | **8** |
+
+Но чаще `INSERT ... SELECT` нужен, когда данные **берутся из базы**: так копируют существующие строки или вставляют результаты вычислений. Например, продублируем все продукты питания под новыми номерами:
+
+```sql
+INSERT INTO Goods (good_id, good_name, type)
+SELECT good_id + 100, good_name, type
+FROM Goods
+WHERE type = 2;
+```
 
 ## Первичный ключ при добавлении новой записи
 
