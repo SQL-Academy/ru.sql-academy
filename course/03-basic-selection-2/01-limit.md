@@ -63,7 +63,7 @@ LIMIT число_строк [OFFSET число_пропущенных];
 | 1   | Don_avia   |
 | 2   | Aeroflot   |
 | 3   | Dale_avia  |
-| 4   | air_France |
+| 4   | Air_France |
 | 5   | British_AW |
 
 Для того чтобы вывести строки с 3 по 5, нужно использовать такой запрос:
@@ -91,7 +91,7 @@ SELECT * FROM Company LIMIT 3 OFFSET 2;
 | id  | name       |
 | --- | ---------- |
 | 3   | Dale_avia  |
-| 4   | air_France |
+| 4   | Air_France |
 | 5   | British_AW |
 
 В данном запросе происходит пропуск первых двух строк таблицы (1, 2), после чего выводятся следующие три записи (3, 4, 5).
